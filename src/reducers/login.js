@@ -1,15 +1,24 @@
-const initial = {
-  
+import _ from 'lodash'
+
+const initialState = {
+  user: null
 }
 
-const actionsMap = {
-  
-}
+const login = (state = initialState, action) => {
+  switch (action.type) {
+    case 'LOGGED_IN':
+      return _.merge({}, state, {
+        user: action.user
+      })
 
-export default (state = initial, action) => {
-  const reduceFn = actionsMap[action.type]
-  if (reduceFn !== undefined) {
-    return reduceFn(state, action)
+    case 'LOGGED_OUT':
+      return _.merge({}, state, {
+        user: null
+      })
+    
+    default:
+      return state
   }
-  return state
 }
+
+export default login

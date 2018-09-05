@@ -3,9 +3,9 @@ import { Text, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import styles from './styles/Register'
+import styles from './styles/ForgotPW'
 
-class Register extends React.Component {
+class ForgotPW extends React.Component {
 
   constructor(props) {
     super(props);
@@ -18,7 +18,7 @@ class Register extends React.Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Index')}
+          onPress={() => this.props.navigation.navigate('Login')}
           style={styles.backButton} 
         >
           <Icon
@@ -40,4 +40,4 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register)
+export default connect(mapStateToProps, mapDispatchToProps)(ForgotPW)

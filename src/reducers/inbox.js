@@ -1,15 +1,15 @@
-const initial = {
-  
+import _ from 'lodash'
+
+const initialState = {
+  //Add initial state
 }
 
-const actionsMap = {
-  
-}
-
-export default (state = initial, action) => {
-  const reduceFn = actionsMap[action.type]
-  if (reduceFn !== undefined) {
-    return reduceFn(state, action)
+const inbox = (state = initialState, action) => {
+  switch (action.type) {
+    //Add cases based on action type
+    default:
+      return state
   }
-  return state
 }
+
+export default inbox

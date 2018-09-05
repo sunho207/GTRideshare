@@ -4,30 +4,32 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: 'center'
   },
   bgImage: {
     position: 'absolute',
     height: Dimensions.get('window').height
   },
   bgOverlay: {
-    backgroundColor: '#fff',
+    backgroundColor: '#4FC3F7',
     opacity: 0.9,
     position: 'absolute',
     height: Dimensions.get('window').height,
     width: Dimensions.get('window').width
   },
-  backButton: {
+  logoImage: {
+    width: Dimensions.get('window').width * 0.8,
+    margin: 100
+  },
+  buttonGroup: {
     position: 'absolute',
-    top: 30,
-    left: 25
+    bottom: 60
   },
   loginButton: {
-    backgroundColor: '#4FC3F7',
+    borderColor: '#fff',
+    borderWidth: 2,
     borderRadius: 20,
     padding: 12,
-    marginTop: 30,
     width: Dimensions.get('window').width * 0.8,
     margin: 5
   },
@@ -37,29 +39,17 @@ export default StyleSheet.create({
     fontSize: 13,
     textAlign: 'center'
   },
-  input: {
+  signupButton: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 12,
     width: Dimensions.get('window').width * 0.8,
-    borderColor: '#ccc',
-    borderBottomWidth: 1,
-    padding: 5,
-    color: '#777'
+    margin: 5
   },
-  inputText: {
-    width: Dimensions.get('window').width * 0.8,
-    textAlign: 'left',
-    marginTop: 15,
-    color: '#42A5F5',
-    fontSize: 10,
-    fontWeight: '700'
-  },
-  forgotpwText: {
-    color: '#42A5F5',
-    fontWeight: '500',
+  signupText: {
+    color: '#4FC3F7',
+    fontWeight: '900',
     fontSize: 13,
-    textAlign: 'center',
-    margin: 15
-  },
-  loading: {
-    height: 15
+    textAlign: 'center'
   }
 })

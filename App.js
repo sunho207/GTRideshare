@@ -1,12 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { createStore, applyMiddleware } from 'redux';
-import { Provider, connect } from 'react-redux';
+import thunk from 'redux-thunk'
+import { Provider } from 'react-redux';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
-import axios from 'axios';
-import axiosMiddleware from 'redux-axios-middleware';
+import { View } from 'react-native'
+import { NativeEventEmitter, NativeModules } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+import Index from './src/containers/login/Index'
 import Login from './src/containers/login/Login'
 import Register from './src/containers/login/Register'
+import ForgotPW from './src/containers/login/ForgotPW'
 import Home from './src/containers/home/Home'
 import Scheduled from './src/containers/scheduled/Scheduled'
 import Join from './src/containers/join/Join'
@@ -14,12 +18,9 @@ import Inbox from './src/containers/inbox/Inbox'
 import Profile from './src/containers/profile/Profile'
 import rootReducer from './src/reducers/index'
 
-const client = axios.create({
-  baseURL: 'https://api.github.com',
-  responseType: 'json'
-});
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
-const store = createStore(rootReducer, applyMiddleware(axiosMiddleware(client)));
+const { StatusBarManager } = NativeModules;
 
 const Tabs = createBottomTabNavigator({
   Home: {
@@ -37,28 +38,90 @@ const Tabs = createBottomTabNavigator({
   Profile: {
     screen: Profile
   }
+}, {
+  navigationOptions: ({ navigation }) => ({
+    tabBarIcon: ({ tintColor }) => {
+      const { routeName } = navigation.state
+      let iconName
+      let iconSize = 24
+      if (routeName === 'Home') {
+        iconName = 'home'
+      } else if (routeName === 'Scheduled') {
+        iconName = 'calendar'
+        iconSize = 20
+      } else if (routeName === 'Join') {
+        iconName = 'plus-circle'
+        iconSize = 34
+      } else if (routeName === 'Inbox') {
+        iconName='inbox'
+      } else if (routeName === 'Profile') {
+        iconName='user'
+      }
+      
+      return <Icon
+        name={iconName}
+        color={tintColor}
+        size={iconSize}
+      />
+    },
+  }),
+  tabBarOptions: {
+    activeTintColor: '#64B5F6',
+    showLabel: false,
+  },
 });
 
 const Stack = createStackNavigator({
+  Index: {
+    screen: Index
+  },
   Login: {
     screen: Login
   },
   Register: {
     screen: Register
   },
-  Index: {
+  ForgotPW: {
+    screen: ForgotPW
+  },
+  Tabs: {
     screen: Tabs
   }
-},{
-  headerMode: 'none'
-});
+}, {
+  headerMode: 'none',
+  mode: 'modal'
+})
 
 export default class App extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      height: 0
+    }
+  }
+
+  componentWillMount() {
+    StatusBarManager.getHeight(({height}) => {
+      this.setState({
+        height
+      })
+    })
+  }
+
   render() {
     return (
-      <Provider store={store}>
-        <Stack />
-      </Provider>
+      <View style={styles.container}>
+        <Provider store={store}>
+          <Stack />
+        </Provider>
+      </View>
     );
   }
 }
+
+const styles = {
+  container: {
+    flex: 1
+  }
+} 
