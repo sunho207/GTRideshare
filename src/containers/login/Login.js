@@ -58,7 +58,7 @@ class Login extends React.Component {
             size={20}
           />
         </TouchableOpacity>
-        <Text style={styles.inputText}>EMAIL</Text>
+        <Text style={styles.inputText}>Email</Text>
         <TextInput
           style={styles.input}
           onChangeText={e => this.setState({ email: e.toString()})}
@@ -66,7 +66,7 @@ class Login extends React.Component {
           spellCheck={false}
           autoCapitalize="none"
         />
-        <Text style={styles.inputText}>PASSWORD</Text>
+        <Text style={styles.inputText}>Password</Text>
         <TextInput
           style={styles.input}
           onChangeText={e => this.setState({ password: e.toString()})}
