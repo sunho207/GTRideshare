@@ -5,22 +5,28 @@ export function loggedIn(user) {
   }
 }
 
-export function login(username, password) {
+export function failedLogin(err) {
+  return {
+    type: 'FAILED_LOGIN',
+    err
+  }
+}
+
+export function login(email, password) {
   return async dispatch => {
-    // fetch(``, {
-    //   method: 'GET',
-    //   headers: {
-    //     Accept: 'application/json'
-    //   }
-    // })
-    // .then(res => res.json())
-    // .then(json => {
-    //   dispatch(loggedIn(json))
-    // })
-    
-    setTimeout(() => {
-      dispatch(loggedIn({}))
-    }, 1000);
+    fetch(`http://localhost:8080/user?email=${email}&password=${password}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(json => {
+      dispatch(loggedIn(json))
+    })
+    .catch(err => {
+      dispatch(failedLogin(err))
+    })
   }
 }
 
