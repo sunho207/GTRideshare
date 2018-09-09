@@ -30,6 +30,12 @@ export function login(email, password) {
   }
 }
 
+export function setUser(user) {
+  return async dispatch => {
+    dispatch(loggedIn(user))
+  }
+}
+
 export const loggedOut = () => ({
   type: 'LOGGED_OUT'
 })

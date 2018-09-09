@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TextInput, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Text, View, TextInput, Image, TouchableOpacity, ActivityIndicator, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -23,6 +23,11 @@ class Login extends React.Component {
         loading: false
       })
       this.props.navigation.navigate('Tabs')
+      try {
+        AsyncStorage.setItem('user', JSON.stringify(nextProps.user));
+      } catch (error) {
+        alert("Unable to store user in local storage")
+      }
     }
     if (nextProps.error) {
       this.setState({

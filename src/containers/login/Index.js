@@ -1,7 +1,8 @@
 import React from 'react';
-import { Image, View, TouchableOpacity, Text } from 'react-native';
+import { Image, View, TouchableOpacity, Text, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import styles from './styles/Index'
+import { setUser } from '../../actions/login'
 
 class Index extends React.Component {
 
@@ -10,6 +11,27 @@ class Index extends React.Component {
     this.state = {
 
     }
+  }
+
+  componentWillMount() {
+    this._retrieveUser()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user) {
+      this.props.navigation.navigate('Tabs')
+    }
+  }
+
+  _retrieveUser = async () => {
+    try {
+      const user = await AsyncStorage.getItem('user')
+      if (user) {
+        this.props.setUser(user)
+      }
+     } catch (error) {
+
+     }
   }
 
   render() {
@@ -47,10 +69,14 @@ class Index extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    user: state.login.user
   }
 }
 
-const mapDispatchToProps = {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUser: (user) => dispatch(setUser(user))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index)
