@@ -56,4 +56,12 @@ export default StyleSheet.create({
     fontSize: 13,
     textAlign: 'center'
   },
+  title: {
+    fontSize: 18,
+    letterSpacing: 1,
+    color: '#64B5F6',
+    fontWeight: '700',
+    position: 'absolute',
+    top: 100
+  }
 })

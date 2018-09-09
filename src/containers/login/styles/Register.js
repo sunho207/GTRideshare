@@ -85,7 +85,7 @@ export default StyleSheet.create({
     fontWeight: '700'
   },
   title: {
-    fontSize: 22,
+    fontSize: 18,
     letterSpacing: 1,
     color: '#64B5F6',
     fontWeight: '700',
