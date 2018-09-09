@@ -53,7 +53,7 @@ export default StyleSheet.create({
     fontWeight: '700'
   },
   verified: {
-    top: -25,
+    top: -30,
     marginBottom: -20,
     right: Dimensions.get('window').width * -0.4 + 10
   },
