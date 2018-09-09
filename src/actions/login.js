@@ -17,7 +17,7 @@ export function login(email, password) {
     fetch(`http://localhost:8080/user?email=${email}&password=${password}`, {
       method: 'GET',
       headers: {
-        Accept: 'application/json'
+        'Accept': 'application/json'
       }
     })
     .then(res => res.json())
@@ -37,5 +37,41 @@ export const loggedOut = () => ({
 export function logout() {
   return async dispatch => {
     dispatch(loggedOut())
+  }
+}
+
+export function registered() {
+  return {
+    type: 'REGISTERED'
+  }
+}
+
+export function register(email, password, firstName, lastName) {
+  return async dispatch => {
+    fetch(`http://localhost:8080/user`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        first_name: firstName,
+        last_name: lastName
+      })
+    })
+    .then(res => {
+      if (res.status === 200) {
+        dispatch(login(email, password))
+      } else if (res.status === 409) {
+        alert("User already exists")
+      } else {
+        alert("Failed to register")
+      }
+    })
+    .catch(err => {
+      alert(err)
+    })
   }
 }
