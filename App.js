@@ -101,14 +101,6 @@ export default class App extends React.Component {
     }
   }
 
-  componentWillMount() {
-    StatusBarManager.getHeight(({height}) => {
-      this.setState({
-        height
-      })
-    })
-  }
-
   render() {
     return (
       <View style={styles.container}>

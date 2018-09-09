@@ -109,6 +109,7 @@ class Register extends React.Component {
               value={this.state.firstName}
               spellCheck={false}
               autoCapitalize="none"
+              underlineColorAndroid='transparent'
             />
           </View>
           <View style={styles.nameRightContainer}>
@@ -119,6 +120,7 @@ class Register extends React.Component {
               value={this.state.lastName}
               spellCheck={false}
               autoCapitalize="none"
+              underlineColorAndroid='transparent'
             />
           </View>
         </View>
@@ -129,6 +131,7 @@ class Register extends React.Component {
           value={this.state.email}
           spellCheck={false}
           autoCapitalize="none"
+          underlineColorAndroid='transparent'
         />
         <View style={styles.verified}>
           <Icon
@@ -143,6 +146,7 @@ class Register extends React.Component {
           onChangeText={e => this.handlePassword(e)}
           value={this.state.password}
           secureTextEntry
+          underlineColorAndroid='transparent'
         />
         <View style={styles.verified}>
           <Icon
@@ -157,6 +161,7 @@ class Register extends React.Component {
           onChangeText={e => this.handleConfirm(e)}
           value={this.state.confirm}
           secureTextEntry
+          underlineColorAndroid='transparent'
         />
         <View style={styles.verified}>
           <Icon
