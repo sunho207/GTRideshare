@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Dimensions, Image, TouchableOpacity } from 'react-native';
 import { MapView } from 'expo';
 import Icon from 'react-native-vector-icons/FontAwesome';
-// import MapViewDirections from 'react-native-maps-directions';
+import MapViewDirections from 'react-native-maps-directions';
 import { connect } from 'react-redux';
 import SlidingUpPanel from 'rn-sliding-up-panel'
 import styles from './styles/Home'
@@ -17,9 +17,9 @@ class Home extends React.Component {
   }
 
   render() {
-    // const origin = {latitude: 37.3318456, longitude: -122.0296002};
-    // const destination = {latitude: 37.771707, longitude: -122.4053769};
-    // const GOOGLE_MAPS_APIKEY = 'AIzaSyCbKtXYrYUnKnJeOFdAmdZGQ5wI5ogD2gc';
+    const origin = {latitude: 37.3318456, longitude: -122.0296002};
+    const destination = {latitude: 37.771707, longitude: -122.4053769};
+    const GOOGLE_MAPS_APIKEY = 'AIzaSyCbKtXYrYUnKnJeOFdAmdZGQ5wI5ogD2gc';
 
     return (
       <View style={styles.container}>
@@ -32,11 +32,11 @@ class Home extends React.Component {
             longitudeDelta: 0.0421,
           }}
         >
-          {/* <MapViewDirections
+          <MapViewDirections
             origin={origin}
             destination={destination}
             apikey={GOOGLE_MAPS_APIKEY}
-          /> */}
+          />
         </MapView>
         <SlidingUpPanel
           visible
@@ -44,8 +44,8 @@ class Home extends React.Component {
           showBackdrop={false}
           allowMomentum
           draggableRange={{
-            top: Dimensions.get('window').height - 25,
-            bottom: 280
+            top: Dimensions.get('window').height - 35,
+            bottom: 300
           }}
         >
           <View style={styles.slider}>

@@ -5,6 +5,10 @@ import styles from './styles/Scheduled'
 
 class Scheduled extends React.Component {
 
+  static navigationOptions = {
+    title: 'My Carpools'
+  }
+
   constructor(props) {
     super(props);
     this.state = {

@@ -9,6 +9,10 @@ import styles from './styles/Profile'
 
 class Profile extends React.Component {
 
+  static navigationOptions = {
+    title: 'Profile'
+  }
+
   constructor(props) {
     super(props);
     this.state = {
