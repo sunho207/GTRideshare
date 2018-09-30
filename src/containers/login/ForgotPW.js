@@ -20,7 +20,6 @@ class ForgotPW extends React.Component {
     } else {
       alert("Please enter a valid email address")
     }
-
   };
 
   render() {
@@ -81,7 +80,6 @@ class ForgotPW extends React.Component {
                 </View>
               )
           }
-
         </View>
     );
   }

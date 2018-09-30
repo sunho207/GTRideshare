@@ -2,7 +2,11 @@ import React from 'react';
 import { Text, View, Dimensions, Image, TouchableOpacity } from 'react-native';
 import { MapView } from 'expo';
 import Icon from 'react-native-vector-icons/FontAwesome';
+<<<<<<< HEAD
 import MapViewDirections from 'react-native-maps-directions';
+=======
+// import MapViewDirections from 'react-native-maps-directions';
+>>>>>>> 8345650d1d52be974e086f9247297016fd0fe317
 import { connect } from 'react-redux';
 import SlidingUpPanel from 'rn-sliding-up-panel'
 import styles from './styles/Home'

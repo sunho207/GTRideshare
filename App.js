@@ -103,6 +103,7 @@ const Tabs = createBottomTabNavigator({
 
 
 const Stack = createStackNavigator({
+  
   Index: {
     screen: Index
   },

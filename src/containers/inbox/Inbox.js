@@ -5,6 +5,7 @@ import { GiftedChat } from 'react-native-gifted-chat'
 
 import styles from './styles/Inbox'
 
+
 class Inbox extends React.Component {
 
   constructor(props) {
