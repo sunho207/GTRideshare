@@ -52,7 +52,10 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     padding: 8,
-    fontSize: 12
+    fontSize: 12,
+    marginLeft: 0,
+    marginRight: 0,
+    height: 38
   },
   seatInput: {
     width: 180,
@@ -68,52 +71,18 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center'
   },
-  timePicker: {
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 8,
-    width: 115
-  }, 
   timePickerFull: {
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
     padding: 8,
     width: 180
-  }, 
-  timePickerText: {
-    color: '#777',
-    fontSize: 12,
-    textAlign: 'center'
   },
   timeToText: {
     marginLeft: 5,
     marginRight: 5,
     padding: 8,
     color: '#777'
-  },
-  days: {
-    borderRadius: 5,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  day: {
-    width: Dimensions.get('window').width * 0.8/7,
-  },
-  dayTextOff: {
-    textAlign: 'center',
-    margin: 8,
-    fontWeight: '900',
-    color: '#ccc'
-  },
-  dayTextOn: {
-    textAlign: 'center',
-    margin: 8,
-    fontWeight: '900',
-    color: '#4FC3F7'
   },
   inputIOS: {
     fontSize: 16,
