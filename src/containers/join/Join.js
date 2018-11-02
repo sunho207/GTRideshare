@@ -1,11 +1,13 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, TextInput, Button } from 'react-native';
 import { connect } from 'react-redux';
+import moment from 'moment'
 
 import styles from './styles/Join'
 import DateSelector from '../../components/join/DateSelector'
 import GoogleLocationInput from '../../components/join/GoogleLocationInput'
 import TimePicker from '../../components/join/TimePicker'
+import { searchCarpools, filterCarpools } from '../../actions/join'
 
 class Join extends React.Component {
 
@@ -36,8 +38,25 @@ class Join extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.carpools && nextProps.carpools != []) {
+      this.props.navigation.navigate('Results')
+    }
+  }
+
   handleFind = () => {
-    this.props.navigation.navigate('Results')
+    if (this.state.lat != '' && this.state.lng != '') {
+      this.props.searchCarpools(this.state.lat, this.state.lng)
+      this.props.filterCarpools('Distance', {
+        dates: this.state.dates,
+        minArrival: moment(this.state.minArrival, "hh:mm a").format("HH:mm"),
+        maxArrival: moment(this.state.maxArrival, "hh:mm a").format("HH:mm"),
+        minDeparture: moment(this.state.minDeparture, "hh:mm a").format("HH:mm"),
+        maxDeparture: moment(this.state.maxDeparture, "hh:mm a").format("HH:mm"),
+      })
+    } else {
+      alert("Please enter an address")
+    }
   }
 
   handleCreate = () => {
@@ -140,16 +159,21 @@ class Join extends React.Component {
           </TouchableOpacity>
         </View>
       </View>
-    );
+    )
   }
 }
 
 const mapStateToProps = (state) => {
   return {
+    carpools: state.join.carpools
   }
 }
 
-const mapDispatchToProps = {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    searchCarpools: (lat, lng) => dispatch(searchCarpools(lat, lng)),
+    filterCarpools: (sort, filters) => dispatch(filterCarpools(sort, filters))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Join)

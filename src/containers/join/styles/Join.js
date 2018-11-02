@@ -58,7 +58,7 @@ export default StyleSheet.create({
     height: 38
   },
   seatInput: {
-    width: 180,
+    width: 115,
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,

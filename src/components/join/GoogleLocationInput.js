@@ -18,7 +18,6 @@ class GoogleLocationInput extends React.Component {
       .then(result => {
         this.props.handleLocationSelect(data.description, result[0].latitude, result[0].longitude)
       })
-    
   }
 
   handleCancel = () => {

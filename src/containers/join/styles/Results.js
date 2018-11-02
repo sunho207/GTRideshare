@@ -4,7 +4,6 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center'
   },
   map: {
     position: 'absolute',
@@ -15,6 +14,11 @@ export default StyleSheet.create({
   },
   listContainer: {
     top: Dimensions.get('window').height / 2.5,
+    height: Dimensions.get('window').height - Dimensions.get('window').height / 2.5,
+    backgroundColor: '#fff',
+  },
+  listContainerFiltering: {
+    top: 0,
     backgroundColor: '#fff',
   },
   listHeader: {
@@ -32,55 +36,81 @@ export default StyleSheet.create({
     position: 'absolute',
     left: 15
   },
-  carpool: {
-    borderBottomWidth: 1,
-    borderColor: '#ccc',
-    width: Dimensions.get('window').width,
-    height: 75,
-    flexDirection: 'row'
-  },
-  mainProfile: {
-    height: 50,
-    width: 50,
-    borderRadius: 25,
-    marginTop: 12.5,
-    marginLeft: 20
-  },
-  infoContainer: {
-    flexDirection: 'column',
-    marginLeft: 15,
-    marginTop: 15
-  },
-  name: {
-    fontWeight: '700',
-    color: '#4FC3F7',
-    fontSize: 14
-  },
-  distance: {
-    fontSize: 11,
-    color: '#aaa'
-  },
-  schedule: {
-    fontWeight: '600',
-    fontSize: 11,
-    color: '#aaa'
-  },
-  messageContainer: {
-    flexDirection: 'column',
-    height: 74,
-    width: 60,
+  cancelButton: {
     position: 'absolute',
-    right: 0,
-    alignItems: 'center',
+    left: 15
+  },
+  cancelText: {
+    color: '#fff',
+    fontWeight: '500'
+  },
+  doneIcon: {
+    position: 'absolute',
+    right: 15
+  },
+  filterContainer: {
+    paddingTop: 5,
+    paddingBottom: 15,
+    alignItems: 'center'
+  },
+  timeContainer: {
+    flexDirection: 'row',
     justifyContent: 'center'
   },
-  messageIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    borderColor: '#fff',
-    backgroundColor: '#4FC3F7',
+  timeToText: {
+    marginLeft: 5,
+    marginRight: 5,
+    padding: 8,
+    color: '#777'
+  },
+  title: {
+    color: '#777',
+    fontSize: 12,
+    marginTop: 7.5,
+    marginBottom: 7.5
+  },
+  sortTitle: {
+    color: '#777',
+    fontSize: 16,
+    fontWeight: '600',
+    marginTop: 7.5,
+    marginBottom: 7.5
+  },
+  filterTitle: {
+    color: '#777',
+    fontSize: 16,
+    fontWeight: '600',
+    marginTop: 22.5,
+    marginBottom: 7.5
+  },
+  buttonContainer: {
+    bottom: 15,
+    position: 'absolute',
     alignItems: 'center',
-    justifyContent: 'center'
+    left: Dimensions.get('window').width * 0.1,
+  },
+  filterButton: {
+    backgroundColor: '#4FC3F7',
+    borderRadius: 5,
+    padding: 12,
+    marginTop: 30,
+    width: Dimensions.get('window').width * 0.8,
+    margin: 5
+  },
+  filterText: {
+    color: '#fff',
+    fontWeight: '900',
+    fontSize: 13,
+    textAlign: 'center'
+  },
+  sortInput: {
+    borderRadius: 5,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    height: 35,
+    textAlign: 'center',
+    width: Dimensions.get('window').width * 0.8,
+    left: Dimensions.get('window').width * 0.1,
+    alignItems: 'center'
   }
 })

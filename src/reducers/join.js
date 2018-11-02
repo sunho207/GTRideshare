@@ -1,12 +1,20 @@
 import _ from 'lodash'
 
 const initialState = {
-  //Add initial state
+  carpools: []
 }
 
 const join = (state = initialState, action) => {
   switch (action.type) {
-    //Add cases based on action type
+    case 'RECEIVE_CARPOOLS':
+      return _.merge({}, state, {
+        carpools: action.carpools
+      })
+    case 'RECEIVE_FILTERS':
+      return _.merge({}, state, {
+        filters: action.filters,
+        sort: action.sort
+      })
     default:
       return state
   }

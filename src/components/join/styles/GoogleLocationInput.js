@@ -10,9 +10,9 @@ export default StyleSheet.create({
     borderRadius: 5,
     padding: 8,
     fontSize: 12,
-    marginLeft: 0,
-    marginRight: 0,
-    height: 38
+    marginLeft: 10,
+    marginRight: 10,
+    height: 38,
   },
   locationInputContainer: {
     backgroundColor: '#fff',

@@ -1,9 +1,13 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, TextInput } from 'react-native';
-import DateTimePicker from 'react-native-modal-datetime-picker';
 import { connect } from 'react-redux';
+import moment from 'moment'
 import RNPickerSelect from 'react-native-picker-select';
+import DateSelector from '../../components/join/DateSelector'
+import GoogleLocationInput from '../../components/join/GoogleLocationInput'
+import TimePicker from '../../components/join/TimePicker'
 import styles from './styles/Join'
+import { createCarpool } from '../../actions/join'
 
 class Create extends React.Component {
 
@@ -15,107 +19,136 @@ class Create extends React.Component {
     super(props);
     this.inputRefs = {};
     this.state = {
-      minTime: '',
-      maxTime: '',
-      sun: false,
-      mon: false,
-      tue: false,
-      wed: false,
-      thu: false,
-      fri: false,
-      sat: false,
+      arrival: '12:00 pm',
+      departure: '12:00 pm',
+      dates: {
+        sun: false,
+        mon: false,
+        tue: false,
+        wed: false,
+        thu: false,
+        fri: false,
+        sat: false,
+      },
       items: [
-        {
-          label: '1 seat',
-          value: 1,
-        },
-        {
-          label: '2 seats',
-          value: 2,
-        },
-        {
-          label: '3 seats',
-          value: 3,
-        },
-        {
-          label: '4 seats',
-          value: 4,
-        }
-      ]
+        { label: '1 seat',
+          value: 1, },
+        { label: '2 seats',
+          value: 2, },
+        { label: '3 seats',
+          value: 3, },
+        { label: '4 seats',
+          value: 4, }
+      ],
+      typing: false,
+      locationSearch: '',
+      lat: '',
+      lng: ''
+    }
+  }
+  
+  handleCreate = () => {
+    let dates = ""
+    if (this.state.dates.sun) {
+      dates += "S"
+    }
+    if (this.state.dates.mon) {
+      dates += "M"
+    }
+    if (this.state.dates.tue) {
+      dates += "T"
+    }
+    if (this.state.dates.wed) {
+      dates += "W"
+    }
+    if (this.state.dates.thu) {
+      dates += "T"
+    }
+    if (this.state.dates.fri) {
+      dates += "F"
+    }
+    if (this.state.dates.sat) {
+      dates += "S"
+    }
+    if (this.state.lat == '' || this.state.lng == '') {
+      alert("Please enter an address")
+    } else if (dates == '') {
+      alert("Please select a carpool schedule")
+    } else {
+      const user = JSON.parse(this.props.user)
+      this.props.createCarpool(
+        user.user_id,
+        this.state.lat,
+        this.state.lng,
+        moment(this.state.arrival, "hh:mm a").format("HH:mm"),
+        moment(this.state.departure, "hh:mm a").format("HH:mm"),
+        dates
+      )
+      this.props.navigation.navigate('Scheduled')
     }
   }
 
-  handleFind = () => {
-    this.props.navigation.navigate('Results')
+  handleCancel = () => {
+    this.setState({
+      typing: false
+    })
   }
 
-  handleCreate = () => {
-    this.props.navigation.navigate('Create')
+  handleLocationSelect = (description, lat, lng) => {
+    this.setState({
+      locationSearch: description,
+      lat,
+      lng,
+      typing: false
+    })
   }
 
-  showMinTimePicker = () => this.setState({ minTimePicker: true });
-
-  hideMinTimePicker = () => this.setState({ minTimePicker: false });
-
-  handleMinTimePicked = (time) => {
+  handleDateToggle = (date) => {
+    const dates = this.state.dates
+    dates[date] = !dates[date]
     this.setState({
-      minTime: time
+      dates
     })
-    this.hideMinTimePicker();
-  };
+  }
 
-  showMaxTimePicker = () => this.setState({ maxTimePicker: true });
-
-  hideMaxTimePicker = () => this.setState({ maxTimePicker: false });
-
-  handleMaxTimePicked = (time) => {
+  handleArrival = (time) => {
     this.setState({
-      maxTime: time
+      arrival: time
     })
-    this.hideMaxTimePicker();
-  };
+  }
+
+  handleDeparture = (time) => {
+    this.setState({
+      departure: time
+    })
+  }
 
   render() {
+    if (this.state.typing) {
+      return (
+        <GoogleLocationInput
+          search={this.state.locationSearch}
+          handleLocationSelect={this.handleLocationSelect}
+          handleCancel={this.handleCancel}
+        />
+      )
+    }
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Carpool Schedule</Text>
-        <View style={styles.days}>
-          <TouchableOpacity style={styles.day} onPress={() => this.setState({sun: !this.state.sun})}>
-            <Text style={this.state.sun ? styles.dayTextOn : styles.dayTextOff}>S</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.day} onPress={() => this.setState({mon: !this.state.mon})}>
-            <Text style={this.state.mon ? styles.dayTextOn : styles.dayTextOff}>M</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.day} onPress={() => this.setState({tue: !this.state.tue})}>
-            <Text style={this.state.tue ? styles.dayTextOn : styles.dayTextOff}>T</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.day} onPress={() => this.setState({wed: !this.state.wed})}>
-            <Text style={this.state.wed ? styles.dayTextOn : styles.dayTextOff}>W</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.day} onPress={() => this.setState({thu: !this.state.thu})}>
-            <Text style={this.state.thu ? styles.dayTextOn : styles.dayTextOff}>Th</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.day} onPress={() => this.setState({fri: !this.state.fri})}>
-            <Text style={this.state.fri ? styles.dayTextOn : styles.dayTextOff}>F</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.day} onPress={() => this.setState({sat: !this.state.sat})}>
-            <Text style={this.state.sat ? styles.dayTextOn : styles.dayTextOff}>S</Text>
-          </TouchableOpacity>
-        </View>
+        <DateSelector dates={this.state.dates} handleDateToggle={this.handleDateToggle} />
         <Text style={styles.title}>My Address</Text>
         <TextInput
           style={styles.locationInput}
-          onChangeText={e => this.setState({ pickup: e.toString()})}
-          value={this.state.pickup}
-          spellCheck={false}
-          autoCapitalize="none"
+          onChangeText={e => this.setState({typing: true, locationSearch: e.toString()})}
+          value={this.state.locationSearch}
           placeholder="Type a new location or select from favorites..."
         />
-        <Text style={styles.title}>Seats Available</Text>
+        <Text style={styles.title}>Additional Seats</Text>
         <View style={styles.timeContainer}>
           <RNPickerSelect
             placeholder={{
-                label: 'Select # of additional seats...',
+                label: '# of seats...',
                 value: null,
             }}
             items={this.state.items}
@@ -134,33 +167,15 @@ class Create extends React.Component {
         </View>
         <Text style={styles.title}>Arrival Time</Text>
         <View style={styles.timeContainer}>
-          <TouchableOpacity style={styles.timePickerFull} onPress={this.showMinTimePicker}>
-            <Text style={styles.timePickerText}>12:00 PM</Text>
-          </TouchableOpacity>
+          <TimePicker time={this.state.arrival} handleTime={this.handleArrival} />
         </View>
         <Text style={styles.title}>Departure Time</Text>
         <View style={styles.timeContainer}>
-          <TouchableOpacity style={styles.timePickerFull} onPress={this.showMinTimePicker}>
-            <Text style={styles.timePickerText}>12:00 PM</Text>
-          </TouchableOpacity>
+          <TimePicker time={this.state.departure} handleTime={this.handleDeparture} />
         </View>
-        <DateTimePicker
-          isVisible={this.state.minTimePicker}
-          onConfirm={this.handleMinTimePicked}
-          onCancel={this.hideMinTimePicker}
-          mode='time'
-          titleIOS="Earliest time you can arrive"
-        />
-        <DateTimePicker
-          isVisible={this.state.maxTimePicker}
-          onConfirm={this.handleMaxTimePicked}
-          onCancel={this.hideMaxTimePicker}
-          mode='time'
-          titleIOS="Latest time you can arrive"
-        />
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            onPress={() => this.handleFind()}
+            onPress={() => this.handleCreate()}
             style={styles.findButton}
           >
             {
@@ -177,10 +192,16 @@ class Create extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    user: state.login.user
   }
 }
 
-const mapDispatchToProps = {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createCarpool: (user_id, lat, lng, arrival, departure, days) => {
+      dispatch(createCarpool(user_id, lat, lng, arrival, departure, days)
+    )}
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Create)

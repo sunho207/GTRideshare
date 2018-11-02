@@ -16,6 +16,7 @@ import Scheduled from './src/containers/scheduled/Scheduled'
 import Join from './src/containers/join/Join'
 import Create from './src/containers/join/Create'
 import Results from './src/containers/join/Results'
+import Filter from './src/containers/join/Filter'
 import Inbox from './src/containers/inbox/Inbox'
 import Profile from './src/containers/profile/Profile'
 import rootReducer from './src/reducers/index'
@@ -31,6 +32,9 @@ const JoinStack = createStackNavigator({
   },
   Results: {
     screen: Results
+  },
+  Filter: {
+    screen: Filter
   }
 }, {
   mode: 'modal'
@@ -103,18 +107,18 @@ const Tabs = createBottomTabNavigator({
 
 
 const Stack = createStackNavigator({
-  Index: {
-    screen: Index
-  },
-  Login: {
-    screen: Login
-  },
-  Register: {
-    screen: Register
-  },
-  ForgotPW: {
-    screen: ForgotPW
-  },
+  // Index: {
+  //   screen: Index
+  // },
+  // Login: {
+  //   screen: Login
+  // },
+  // Register: {
+  //   screen: Register
+  // },
+  // ForgotPW: {
+  //   screen: ForgotPW
+  // },
   Tabs: {
     screen: Tabs
   }

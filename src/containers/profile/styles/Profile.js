@@ -29,8 +29,6 @@ export default StyleSheet.create({
     margin: 10,
     fontSize: 13,
     fontWeight: '600',
-    color: '#777',
-    borderBottomWidth: 1,
-    borderColor: '#eee'
+    color: '#777'
   }
 })
