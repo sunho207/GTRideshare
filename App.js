@@ -14,29 +14,63 @@ import ForgotPW from './src/containers/login/ForgotPW'
 import Home from './src/containers/home/Home'
 import Scheduled from './src/containers/scheduled/Scheduled'
 import Join from './src/containers/join/Join'
+import Create from './src/containers/join/Create'
+import Results from './src/containers/join/Results'
+import Filter from './src/containers/join/Filter'
 import Inbox from './src/containers/inbox/Inbox'
 import Profile from './src/containers/profile/Profile'
 import rootReducer from './src/reducers/index'
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
-const { StatusBarManager } = NativeModules;
+const JoinStack = createStackNavigator({
+  Join: {
+    screen: Join
+  },
+  Create: {
+    screen: Create
+  },
+  Results: {
+    screen: Results
+  },
+  Filter: {
+    screen: Filter
+  }
+}, {
+  mode: 'modal'
+})
+
+const ProfileStack = createStackNavigator({
+  Profile: {
+    screen: Profile
+  }
+}, {
+  mode: 'modal'
+})
+
+const ScheduledStack = createStackNavigator({
+  Scheduled: {
+    screen: Scheduled
+  }
+}, {
+  mode: 'modal'
+})
 
 const Tabs = createBottomTabNavigator({
   Home: {
     screen: Home
   },
   Scheduled: {
-    screen: Scheduled
+    screen: ScheduledStack
   },
   Join: {
-    screen: Join
+    screen: JoinStack
   },
   Inbox: {
     screen: Inbox
   },
   Profile: {
-    screen: Profile
+    screen: ProfileStack
   }
 }, {
   navigationOptions: ({ navigation }) => ({
@@ -71,19 +105,20 @@ const Tabs = createBottomTabNavigator({
   },
 });
 
+
 const Stack = createStackNavigator({
-  Index: {
-    screen: Index
-  },
-  Login: {
-    screen: Login
-  },
-  Register: {
-    screen: Register
-  },
-  ForgotPW: {
-    screen: ForgotPW
-  },
+  // Index: {
+  //   screen: Index
+  // },
+  // Login: {
+  //   screen: Login
+  // },
+  // Register: {
+  //   screen: Register
+  // },
+  // ForgotPW: {
+  //   screen: ForgotPW
+  // },
   Tabs: {
     screen: Tabs
   }
@@ -99,14 +134,6 @@ export default class App extends React.Component {
     this.state = {
       height: 0
     }
-  }
-
-  componentWillMount() {
-    StatusBarManager.getHeight(({height}) => {
-      this.setState({
-        height
-      })
-    })
   }
 
   render() {

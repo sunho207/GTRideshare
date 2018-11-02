@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TextInput, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Text, View, TextInput, Image, TouchableOpacity, ActivityIndicator, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -11,7 +11,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
+      email: '',
       password: '',
       loading: false
     }
@@ -23,6 +23,17 @@ class Login extends React.Component {
         loading: false
       })
       this.props.navigation.navigate('Tabs')
+      try {
+        AsyncStorage.setItem('user', JSON.stringify(nextProps.user));
+      } catch (error) {
+        alert("Unable to store user in local storage")
+      }
+    }
+    if (nextProps.error) {
+      this.setState({
+        loading: false
+      })
+      alert("Failed to login")
     }
   }
 
@@ -30,7 +41,7 @@ class Login extends React.Component {
     this.setState({
       loading: true
     })
-    this.props.login(this.state.username, this.state.password)
+    this.props.login(this.state.email, this.state.password)
   }
 
   render() {
@@ -52,19 +63,19 @@ class Login extends React.Component {
             size={20}
           />
         </TouchableOpacity>
-        <Text style={styles.inputText}>USERNAME</Text>
+        <Text style={styles.inputText}>Email</Text>
         <TextInput
           style={styles.input}
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.username}
+          onChangeText={e => this.setState({ email: e.toString()})}
+          value={this.state.email}
           spellCheck={false}
           autoCapitalize="none"
         />
-        <Text style={styles.inputText}>PASSWORD</Text>
+        <Text style={styles.inputText}>Password</Text>
         <TextInput
           style={styles.input}
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.username}
+          onChangeText={e => this.setState({ password: e.toString()})}
+          value={this.state.password}
           secureTextEntry
         />
         <TouchableOpacity
@@ -89,13 +100,14 @@ class Login extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.login.user
+    user: state.login.user,
+    error: state.login.error
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: (username, password) => dispatch(login(username, password))
+    login: (email, password) => dispatch(login(email, password))
   }
 }
 
