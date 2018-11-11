@@ -75,7 +75,7 @@ class Create extends React.Component {
     } else if (dates == '') {
       alert("Please select a carpool schedule")
     } else {
-      const user = JSON.parse(this.props.user)
+      const user = this.props.user
       this.props.createCarpool(
         user.user_id,
         this.state.lat,

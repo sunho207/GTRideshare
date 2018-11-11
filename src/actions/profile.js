@@ -1,31 +1,32 @@
-export function updateProfile(data) {
-  console.log(data)
+export function loggedIn(user) {
+  return {
+    type: 'LOGGED_IN',
+    user
+  }
+}
+
+export function updateProfile(idx, first_name, last_name, phone_number, profile_picture) {
   return async dispatch => {
-    fetch(``, {
-      method: 'GET',
+    fetch(`http://localhost:8080/user`, {
+      method: 'PUT',
       headers: {
-        'Accept': 'application/json'
-      }
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        idx,
+        first_name,
+        last_name,
+        phone_number,
+        profile_picture
+      })
     })
-    .then(res => res.json())
+    .then(res => {
+      console.log(res)
+    })
     .catch(err => {
+      console.log(err)
       alert("Could not update profile")
     })
   }
 }
-
-export function updatePhoto(url) {
-  return async dispatch => {
-    fetch(``, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json'
-      }
-    })
-    .then(res => res.json())
-    .catch(err => {
-      alert("Could not update photo")
-    })
-  }
-}
-

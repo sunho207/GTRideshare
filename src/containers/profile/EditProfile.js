@@ -17,7 +17,7 @@ class EditProfile extends React.Component {
       first_name: '',
       last_name: '',
       profile_picture: '',
-      phone: ''
+      phone_number: ''
     }
   }
 
@@ -27,22 +27,19 @@ class EditProfile extends React.Component {
       first_name: user.first_name,
       last_name: user.last_name,
       profile_picture: user.profile_picture != 'https://www.r-users.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png' ? user.profile_picture : '',
-      phone: user.phone
+      phone_number: user.phone_number
     })
   }
 
   handleUpdate = () => {
-    this.props.updateProfile({
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      phone: this.state.phone,
-      profile_picture: this.state.profile_picture != '' ? this.state.profile_picture : 'https://www.r-users.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png'
-    })
+    this.props.updateProfile(
+      this.props.user.user_id,
+      this.state.first_name,
+      this.state.last_name,
+      this.state.phone_number,
+      this.state.profile_picture != '' ? this.state.profile_picture : 'https://www.r-users.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png'
+    )
   }
-
-  // handlePhoto = () => {
-  //   this.props.updatePhoto(this.state.profile_picture)
-  // }
 
   render() {
     return (
@@ -78,8 +75,8 @@ class EditProfile extends React.Component {
         <Text style={styles.title}>Phone Number</Text>
         <TextInput
           style={styles.input}
-          value={this.state.phone}
-          onChangeText={(e) => {this.setState({ phone: e })}}
+          value={this.state.phone_number}
+          onChangeText={(e) => {this.setState({ phone_number: e })}}
         />
         <Text style={styles.title}>Profile Url</Text>
         <TextInput
@@ -109,7 +106,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateProfile: (data) => dispatch(updateProfile(data)),
+    updateProfile: (idx, first_name, last_name, phone_number, profile_picture) => dispatch(updateProfile(idx, first_name, last_name, phone_number, profile_picture)),
     // updatePhoto: (url) => dispatch(updatePhoto(url))
   }
 }

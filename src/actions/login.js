@@ -52,7 +52,7 @@ export function registered() {
   }
 }
 
-export function register(email, password, firstName, lastName) {
+export function register(email, password, firstName, lastName, phoneNumber) {
   return async dispatch => {
     fetch(`http://localhost:8080/user`, {
       method: 'POST',
@@ -64,7 +64,9 @@ export function register(email, password, firstName, lastName) {
         email,
         password,
         first_name: firstName,
-        last_name: lastName
+        last_name: lastName,
+        phone_number: phoneNumber,
+        profile_picture: ''
       })
     })
     .then(res => {

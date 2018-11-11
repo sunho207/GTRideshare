@@ -45,13 +45,13 @@ class Profile extends React.Component {
       <View style={styles.container}>
         <Image
           style={styles.profile}
-          source={{uri: this.props.user.profile_picture}}
+          source={{uri: this.props.user ? this.props.user.profile_picture : ''}}
         />
         <Text style={styles.profileInfo}>
-          {this.props.user.first_name} {this.props.user.last_name}
+          {this.props.user && this.props.user.first_name} { this.props.user && this.props.user.last_name}
         </Text>
         <Text style={styles.emailInfo}>
-          {this.props.user.email}
+          {this.props.user && this.props.user.email}
         </Text>
         <View style={styles.settingsContainer}>
           <SettingsList borderColor="#eee">

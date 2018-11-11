@@ -15,7 +15,7 @@ class Register extends React.Component {
       password: '',
       firstName: '',
       lastName: '',
-      phone: '',
+      phoneNumber: '',
       confirm: '',
       verifiedEmail: false,
       verifiedPassword: false,
@@ -40,8 +40,13 @@ class Register extends React.Component {
 
   handlePhone = (e) => {
     this.setState({
-      phone: e.toString()
+      phoneNumber: e.toString()
     })
+    if (e.length == 10) {
+      this.setState({
+        verifiedPhone: true
+      })
+    }
   }
 
   handlePassword = (e) => {
@@ -82,7 +87,7 @@ class Register extends React.Component {
     } else if (!this.state.verifiedConfirm) {
       alert('Please make sure the passwords match')
     } else {
-      this.props.register(this.state.email, this.state.password, this.state.firstName, this.state.lastName)
+      this.props.register(this.state.email, this.state.password, this.state.firstName, this.state.lastName, this.state.phoneNumber)
     }
   }
 
@@ -151,7 +156,7 @@ class Register extends React.Component {
         <TextInput
           style={styles.input}
           onChangeText={e => this.handlePhone(e)}
-          value={this.state.phone}
+          value={this.state.phoneNumber}
           spellCheck={false}
           autoCapitalize="none"
           underlineColorAndroid='transparent'
@@ -212,7 +217,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    register: (email, password, firstName, lastName) => dispatch(register(email, password, firstName, lastName))
+    register: (email, password, firstName, lastName, phoneNumber) => dispatch(register(email, password, firstName, lastName, phoneNumber))
   }
 }
 
