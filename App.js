@@ -13,15 +13,29 @@ import Register from './src/containers/login/Register'
 import ForgotPW from './src/containers/login/ForgotPW'
 import Home from './src/containers/home/Home'
 import Scheduled from './src/containers/scheduled/Scheduled'
+import CarpoolView from './src/containers/scheduled/CarpoolView'
 import Join from './src/containers/join/Join'
 import Create from './src/containers/join/Create'
 import Results from './src/containers/join/Results'
 import Filter from './src/containers/join/Filter'
 import Inbox from './src/containers/inbox/Inbox'
+import Chat from './src/containers/inbox/Chat'
 import Profile from './src/containers/profile/Profile'
+import EditProfile from './src/containers/profile/EditProfile'
 import rootReducer from './src/reducers/index'
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
+
+const ScheduledStack = createStackNavigator({
+  Scheduled: {
+    screen: Scheduled
+  },
+  CarpoolView: {
+    screen: CarpoolView
+  }
+}, {
+  mode: 'modal'
+})
 
 const JoinStack = createStackNavigator({
   Join: {
@@ -40,17 +54,23 @@ const JoinStack = createStackNavigator({
   mode: 'modal'
 })
 
-const ProfileStack = createStackNavigator({
-  Profile: {
-    screen: Profile
+const InboxStack = createStackNavigator({
+  Inbox: {
+    screen: Inbox
+  },
+  Chat: {
+    screen: Chat
   }
 }, {
   mode: 'modal'
 })
 
-const ScheduledStack = createStackNavigator({
-  Scheduled: {
-    screen: Scheduled
+const ProfileStack = createStackNavigator({
+  Profile: {
+    screen: Profile
+  },
+  EditProfile: {
+    screen: EditProfile
   }
 }, {
   mode: 'modal'
@@ -67,7 +87,7 @@ const Tabs = createBottomTabNavigator({
     screen: JoinStack
   },
   Inbox: {
-    screen: Inbox
+    screen: InboxStack
   },
   Profile: {
     screen: ProfileStack
@@ -107,18 +127,18 @@ const Tabs = createBottomTabNavigator({
 
 
 const Stack = createStackNavigator({
-  // Index: {
-  //   screen: Index
-  // },
-  // Login: {
-  //   screen: Login
-  // },
-  // Register: {
-  //   screen: Register
-  // },
-  // ForgotPW: {
-  //   screen: ForgotPW
-  // },
+  Index: {
+    screen: Index
+  },
+  Login: {
+    screen: Login
+  },
+  Register: {
+    screen: Register
+  },
+  ForgotPW: {
+    screen: ForgotPW
+  },
   Tabs: {
     screen: Tabs
   }

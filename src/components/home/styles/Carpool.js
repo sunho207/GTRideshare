@@ -6,7 +6,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     borderRadius: 40,
-    paddingTop: 20
   },
   row: {
     flexWrap: 'wrap', 
@@ -20,6 +19,14 @@ export default StyleSheet.create({
     margin: 25,
     marginRight: 20,
     marginTop: 0
+  },
+  divider:{
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 1,
+    height: 1,
+    width: '80%',
+    marginTop: 30,
+    marginBottom: 30
   },
   row: {
     flexWrap: 'wrap', 
@@ -37,26 +44,38 @@ export default StyleSheet.create({
   driverSubtext: {
     fontWeight: 'bold',
     color: '#555',
-    fontSize: 18
+    fontSize: 18,
+    paddingTop: 2
+  },
+  othersSubtext: {
+    color: '#777',
+    fontSize: 15,
+    paddingTop: 4
   },
   carpoolInfo: {
     width: '33%',
     alignItems: 'center'
   },
+  carpoolMoreInfo: {
+    width: '50%',
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 10
+  },
   profileText: {
     color: '#999',
     fontSize: 9,
     marginBottom: 5
-  }, 
+  },
   profileSubtext: {
-    color: '#777',
+    color: '#555',
     width: '70%',
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: 'bold',
     textAlign: 'center'
   },
   profileSubtext2: {
-    color: '#777',
+    color: '#555',
     width: '70%',
     fontSize: 16,
     fontWeight: 'bold',
@@ -79,7 +98,44 @@ export default StyleSheet.create({
     fontSize: 11
   },
   up: {
+    marginTop: 10,
+    marginBottom: 5
+  },
+  phone: {
+    marginTop: 20
+  },
+  carpoolersText: {
+    color: '#555',
+    fontSize: 16,
+    marginBottom: 15,
+    fontWeight: '600',
+    textAlign: 'left',
+    width: '80%'
+  },
+  carpoolersContainer: {
+    width: '80%',
+    alignItems: 'flex-start'
+  },
+  carpoolerText: {
+    color: '#555',
+    marginTop: -38,
+    marginLeft: 55,
+    fontSize: 14,
+    fontWeight: 'bold'
+  },
+  carpoolerSubtext: {
+    marginTop: 3,
+    marginLeft: 55,
+    color: '#888',
+    fontSize: 11
+  },
+  messageIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderColor: '#fff',
+    backgroundColor: '#42A5F5',
     alignItems: 'center',
-    marginTop: 10
+    justifyContent: 'center'
   }
 })

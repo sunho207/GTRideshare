@@ -54,6 +54,25 @@ class Join extends React.Component {
         minDeparture: moment(this.state.minDeparture, "hh:mm a").format("HH:mm"),
         maxDeparture: moment(this.state.maxDeparture, "hh:mm a").format("HH:mm"),
       })
+      this.setState({
+        minArrival: '12:00 pm',
+        maxArrival: '12:00 pm',
+        minDeparture: '12:00 pm',
+        maxDeparture: '12:00 pm',
+        dates: {
+          sun: false,
+          mon: false,
+          tue: false,
+          wed: false,
+          thu: false,
+          fri: false,
+          sat: false,
+        },
+        typing: false,
+        locationSearch: '',
+        lat: '',
+        lng: ''
+      })
     } else {
       alert("Please enter an address")
     }

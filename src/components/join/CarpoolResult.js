@@ -28,7 +28,7 @@ class CarpoolResult extends React.Component {
       <TouchableOpacity style={styles.carpool} onPress={() => this.handleSelect()}>
         <Image
           style={styles.mainProfile}
-          source={{uri: 'https://www.billboard.com/files/styles/article_main_image/public/media/jack-dorsey-twitter-headshot-2015-billboard-650.jpg'}}
+          source={{uri: carpool.user_picture}}
         />
         <View style={styles.infoContainer}>
           <Text style={styles.name}>

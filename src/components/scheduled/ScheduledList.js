@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, FlatList, TouchableOpacity, Image } from 'react-native';
-import Carpool from '../../components/scheduled/Carpool'
+import CarpoolItem from './CarpoolItem'
 import _ from 'lodash'
 import styles from './styles/ScheduledList'
 
@@ -9,27 +9,13 @@ class ScheduledList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      carpools: [
-        {
-          name: 'Andy Kim',
-          start: '2018-07-01',
-          end: '2018-11-01',
-          days: 'MWF'
-        },
-        {
-          name: 'Anas Khan',
-          start: '2018-09-01',
-          end: '2018-12-01',
-          days: 'T'
-        }
-      ],
       filtered: []
     }
   }
 
   componentWillReceiveProps(nextProps) {
     let filteredArray = []
-    _.forEach(this.state.carpools, carpool => {
+    _.forEach(this.props.carpools, carpool => {
       if (Date.parse(carpool.start) <= Date.parse(nextProps.selected) && 
         Date.parse(carpool.end) >= Date.parse(nextProps.selected)) {
           let parsedDate = new Date(nextProps.selected).getDay()
@@ -54,10 +40,10 @@ class ScheduledList extends React.Component {
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.state.filtered}
+          data={this.props.selected == '' ? this.props.carpools : this.state.filtered}
           renderItem={({item}) => {
             return (
-              <Carpool data={item} />
+              <CarpoolItem carpool={item} handleView={this.props.handleView} />
             )
           }}
           keyExtractor={(item, index) => index.toString()}

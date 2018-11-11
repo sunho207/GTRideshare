@@ -36,15 +36,22 @@ class Profile extends React.Component {
     }
   }
 
+  handleEditProfile = () => {
+    this.props.navigation.navigate('EditProfile')
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Image
           style={styles.profile}
-          source={{uri: 'https://www.billboard.com/files/styles/article_main_image/public/media/jack-dorsey-twitter-headshot-2015-billboard-650.jpg'}}
+          source={{uri: this.props.user.profile_picture}}
         />
         <Text style={styles.profileInfo}>
-          Charlie Deet
+          {this.props.user.first_name} {this.props.user.last_name}
+        </Text>
+        <Text style={styles.emailInfo}>
+          {this.props.user.email}
         </Text>
         <View style={styles.settingsContainer}>
           <SettingsList borderColor="#eee">
@@ -52,6 +59,7 @@ class Profile extends React.Component {
               hasNavArrow
               titleStyle={styles.settingsItem}
               title='Edit Profile'
+              onPress={this.handleEditProfile}
             />
             <SettingsList.Item
               hasNavArrow={false}

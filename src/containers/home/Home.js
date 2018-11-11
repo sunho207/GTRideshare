@@ -1,39 +1,66 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
+import SlidingUpPanel from 'rn-sliding-up-panel'
 import MapRoutes from '../../components/home/MapRoutes'
-import HomeSlider from '../../components/home/HomeSlider'
+import Carpool from '../../components/home/Carpool'
 import styles from './styles/Home'
+import _ from 'lodash'
+import { getUpcomingCarpool } from '../../actions/home'
 
 class Home extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      selected: {
-        route: {
-          destination: {
-            address: "2173 Lawrenceville-Suwanee Rd, Suwanee, GA 30024, USA",
-            lat: 34.0054825,
-            lng: -84.0409682,
-          },
-          directions: "alknEfqg`OZkBZHrBd@\\HDWf@iDX}B`@wDJkBNwBLiCR}GDoF?}Ag@DaLlA_Ef@wAFy@@yBK{ASm@O}Bs@qEcBgOoFcBk@]AMBo@YuAk@{Aq@aDoA{CsAoDgBuD_CwJiH}L_JmCkBAQAIEGmCcCkE}Dc@g@qAyBk@_BaCaJc@oAWc@a@e@c@]{@a@{A]n@wE`AaHNiB?{@KaBSgAGWg@yAu@mAmFyFqCyCkA{AuA{BgAgB~@{@`D}Cn@o@bAcA`AsAp@mARk@Pw@RuAVcDvAkVXeERaCFoCK{Aq@kE{@oISkBGwBi@kM_@yJyAiUI}AM[}@Zu@Pm@H_ERi@@wANaATi@PcAd@",
-          origin: {
-            address: "2148 Duluth Hwy, Duluth, GA 30097, USA",
-            lat: 33.9784149,
-            lng: -84.0937998,
-          },
-        }
-      }
+      up: true
+    }
+  }
+
+  componentWillMount() {
+    const { height, width } = Dimensions.get('window')
+    this.setState({
+      height,
+      width
+    })
+    this.props.getUpcomingCarpool()
+  }
+
+  handleDrag = (position) => {
+    if (position > (this.state.height * 2)/3) {
+      this.setState({
+        up: false
+      })
+    } else {
+      this.setState({
+        up: true
+      })
     }
   }
 
   render() {
-
+    if (_.isEqual(this.props.carpool, {})) {
+      return (
+        <View></View>
+      )
+    }
     return (
       <View style={styles.container}>
-        <MapRoutes carpool={this.state.selected} />
-        <HomeSlider />
+        <MapRoutes carpool={this.props.carpool} />
+        <SlidingUpPanel
+          visible
+          startCollapsed
+          showBackdrop={false}
+          allowMomentum
+          onDrag={(position) => this.handleDrag(position)}
+          draggableRange={{
+            top: this.state.height - 40,
+            bottom: 300 + (Platform.OS === 'ios' && (this.state.height === 812 || this.state.width === 812)
+              ? 34 : 0)
+          }}
+        >
+          <Carpool carpool={this.props.carpool} up={this.state.up}/>
+        </SlidingUpPanel>
       </View>
     )
   }
@@ -41,10 +68,14 @@ class Home extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    carpool: state.home.carpool
   }
 }
 
-const mapDispatchToProps = {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUpcomingCarpool: () => dispatch(getUpcomingCarpool())
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

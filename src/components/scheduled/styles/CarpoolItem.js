@@ -8,6 +8,11 @@ export default StyleSheet.create({
     height: 75,
     flexDirection: 'row'
   },
+  row: {
+    flexWrap: 'wrap', 
+    alignItems: 'flex-start',
+    flexDirection:'row',
+  },
   mainProfile: {
     height: 50,
     width: 50,
@@ -22,7 +27,11 @@ export default StyleSheet.create({
   },
   name: {
     fontWeight: '700',
-    color: '#4FC3F7',
+    color: '#777',
+    fontSize: 14
+  },
+  others: {
+    color: '#777',
     fontSize: 14
   },
   distance: {

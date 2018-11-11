@@ -2,9 +2,9 @@ import React from 'react';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment'
-import styles from './styles/Carpool'
+import styles from './styles/CarpoolItem'
 
-class Carpool extends React.Component {
+class CarpoolItem extends React.Component {
 
   constructor(props) {
     super(props);
@@ -13,25 +13,31 @@ class Carpool extends React.Component {
     }
   }
 
+  handleView = () => {
+    this.props.handleView(this.props.carpool)
+  }
+
   render() {
-    const carpool = this.props.data
+    const carpool = this.props.carpool
     const arrival = moment(carpool.scheduled_arrival, "HH:mm:ss").format("hh:mm a")
     const departure = moment(carpool.scheduled_departure, "HH:mm:ss").format("hh:mm a")
     if (!carpool) {
       return <View></View>
     }
     return (
-      <TouchableOpacity style={styles.carpool}>
+      <TouchableOpacity style={styles.carpool} onPress={() => this.handleView()}>
         <Image
           style={styles.mainProfile}
-          source={{uri: 'https://www.billboard.com/files/styles/article_main_image/public/media/jack-dorsey-twitter-headshot-2015-billboard-650.jpg'}}
+          source={{uri: carpool.captain.photoUrl}}
         />
         <View style={styles.infoContainer}>
-          <Text style={styles.name}>
-            {carpool.name}
-          </Text>
+          <View style={styles.row}>
+            <Text style={styles.name}>
+              {carpool.captain.first_name} {carpool.captain.last_name}
+            </Text>
+          </View>
           <Text style={styles.schedule}>
-            
+            {carpool.days} {arrival} to {departure}
           </Text>
           <Text style={styles.distance}>
             
@@ -41,4 +47,4 @@ class Carpool extends React.Component {
     )
   }
 }
-export default Carpool
+export default CarpoolItem

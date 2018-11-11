@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import _ from 'lodash'
 
 import CarpoolResult from '../../components/join/CarpoolResult'
-import MapRoutes from '../../components/home/MapRoutes'
+import CarpoolMap from '../../components/scheduled/CarpoolMap'
 import styles from './styles/Results'
 
 class Results extends React.Component {
@@ -58,7 +58,6 @@ class Results extends React.Component {
         //   carpool.scheduled_arrival <= filters.maxArrival &&
         //   carpool.scheduled_departure >= filters.minDeparture &&
         //   carpool.scheduled_departure <= filters.maxDeparture) {
-        // carpool.scheduled_days
           filtered.push(carpool)
         // }
       })
@@ -69,9 +68,10 @@ class Results extends React.Component {
       } else if (nextProps.sort == 'Departure Time') {
         filtered = _.orderBy(filtered, function (e) { return e.scheduled_departure }, ['asc'])
       }
+      filtered.push({})
       this.setState({
         filtered,
-        selected: filtered.length > 0 ? filtered[0] : null
+        selected: filtered.length > 1 ? filtered[0] : null
       })
     }
   }
@@ -82,15 +82,19 @@ class Results extends React.Component {
     })
   }
 
+  handleCreate = () => {
+    this.props.navigation.navigate('Create')
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <MapRoutes carpool={this.state.selected} />
+        <CarpoolMap carpool={this.state.selected} />
         <View style={styles.listContainer}>
           <View style={styles.listHeader}>
-            <TouchableOpacity style={styles.filterIcon} onPress={() => this.setState({filtering: !this.state.filtering})}>
+            <View style={styles.filterIcon}>
               <Icon name="sort" size={18} color='#FFF' />
-            </TouchableOpacity>
+            </View>
             <Text style={styles.listTitle}>
               Results
             </Text>
@@ -98,9 +102,18 @@ class Results extends React.Component {
           <FlatList
             data={this.state.filtered}
             renderItem={({item}) => {
-              return (
-                <CarpoolResult data={item} handleSelect={this.handleSelect} />
-              )
+              if (_.isEqual(item, {})) {
+                return (
+                  <TouchableOpacity style={styles.createContainer} onPress={this.handleCreate}>
+                    <Text style={styles.createText}>Didn't find what you were looking for?</Text>
+                  </TouchableOpacity>
+                )
+              } else {
+                return (
+                  <CarpoolResult data={item} handleSelect={this.handleSelect} />
+                )
+              }
+              
             }}
             keyExtractor={(item, index) => index.toString()}
           />

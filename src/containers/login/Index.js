@@ -27,7 +27,7 @@ class Index extends React.Component {
     try {
       const user = await AsyncStorage.getItem('user')
       if (user) {
-        this.props.setUser(user)
+        this.props.setUser(JSON.parse(user))
       }
      } catch (error) {
 

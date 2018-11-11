@@ -15,6 +15,7 @@ class Register extends React.Component {
       password: '',
       firstName: '',
       lastName: '',
+      phone: '',
       confirm: '',
       verifiedEmail: false,
       verifiedPassword: false,
@@ -35,6 +36,12 @@ class Register extends React.Component {
         verifiedEmail: false
       })
     }
+  }
+
+  handlePhone = (e) => {
+    this.setState({
+      phone: e.toString()
+    })
   }
 
   handlePassword = (e) => {
@@ -137,6 +144,22 @@ class Register extends React.Component {
           <Icon
             name="check"
             color={ this.state.verifiedEmail ? '#9CCC65' : '#bbb'}
+            size={20}
+          />
+        </View>
+        <Text style={styles.inputText}>Phone Number</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={e => this.handlePhone(e)}
+          value={this.state.phone}
+          spellCheck={false}
+          autoCapitalize="none"
+          underlineColorAndroid='transparent'
+        />
+        <View style={styles.verified}>
+          <Icon
+            name="check"
+            color={ this.state.verifiedPhone ? '#9CCC65' : '#bbb'}
             size={20}
           />
         </View>

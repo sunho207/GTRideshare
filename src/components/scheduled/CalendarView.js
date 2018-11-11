@@ -15,7 +15,7 @@ class CalendarView extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.handleNextMonth({ dateString: new Date()})
   }
 
@@ -24,6 +24,7 @@ class CalendarView extends React.Component {
       this.setState({
         selected: ''
       })
+      this.props.handleSelect('')
     } else {
       this.setState({
         selected: day.dateString
