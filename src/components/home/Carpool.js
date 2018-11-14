@@ -36,9 +36,9 @@ class Carpool extends React.Component {
   }
 
   openPhone = () => {
-    if (this.state.selected.phone) {
+    if (this.state.selected.phone_number) {
       call({
-        number: this.state.selected.phone,
+        number: this.state.selected.phone_number,
         prompt: false
       }).catch(console.error)
     } else {
@@ -72,7 +72,7 @@ class Carpool extends React.Component {
         <View style={styles.row}>
           <Image
             style={styles.profile}
-            source={{uri: carpool.captain.photoUrl }}
+            source={{uri: carpool.captain.profile_picture }}
           />
           <View style={styles.driverWrapper}>
             <Text style={styles.driverText}>

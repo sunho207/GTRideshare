@@ -20,7 +20,7 @@ class Carpooler extends React.Component {
       <TouchableOpacity style={styles.profileContainer} onPress={() => this.handleSelect()}>
         <Image
           style={this.props.selected ? styles.profileSelected : styles.profile}
-          source={{uri: this.props.carpooler.photoUrl}}
+          source={{uri: this.props.carpooler.profile_picture}}
         />
       </TouchableOpacity>
     )

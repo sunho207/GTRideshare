@@ -28,7 +28,7 @@ class CarpoolItem extends React.Component {
       <TouchableOpacity style={styles.carpool} onPress={() => this.handleView()}>
         <Image
           style={styles.mainProfile}
-          source={{uri: carpool.captain.photoUrl}}
+          source={{uri: carpool.captain.profile_picture}}
         />
         <View style={styles.infoContainer}>
           <View style={styles.row}>

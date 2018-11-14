@@ -6,7 +6,7 @@ import MapRoutes from '../../components/home/MapRoutes'
 import Carpool from '../../components/home/Carpool'
 import styles from './styles/Home'
 import _ from 'lodash'
-import { getUpcomingCarpool } from '../../actions/home'
+import { getMyCarpools } from '../../actions/scheduled'
 
 class Home extends React.Component {
 
@@ -23,7 +23,7 @@ class Home extends React.Component {
       height,
       width
     })
-    this.props.getUpcomingCarpool()
+    this.props.getMyCarpools(this.props.user.user_id)
   }
 
   handleDrag = (position) => {
@@ -55,7 +55,7 @@ class Home extends React.Component {
           onDrag={(position) => this.handleDrag(position)}
           draggableRange={{
             top: this.state.height - 40,
-            bottom: 300 + (Platform.OS === 'ios' && (this.state.height === 812 || this.state.width === 812)
+            bottom: 288 + (Platform.OS === 'ios' && (this.state.height === 812 || this.state.width === 812)
               ? 34 : 0)
           }}
         >
@@ -68,13 +68,14 @@ class Home extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    user: state.login.user,
     carpool: state.home.carpool
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUpcomingCarpool: () => dispatch(getUpcomingCarpool())
+    getMyCarpools: (user_id) => dispatch(getMyCarpools(user_id))
   }
 }
 

@@ -21,8 +21,10 @@ export function updateProfile(idx, first_name, last_name, phone_number, profile_
         profile_picture
       })
     })
-    .then(res => {
-      console.log(res)
+    .then(res => res.json())
+    .then(json => {
+      alert("Profile updated")
+      dispatch(loggedIn(json))
     })
     .catch(err => {
       console.log(err)

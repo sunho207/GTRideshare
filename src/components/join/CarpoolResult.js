@@ -17,6 +17,10 @@ class CarpoolResult extends React.Component {
     this.props.handleSelect(this.props.data)
   }
 
+  handleJoin = () => {
+    this.props.handleJoin(this.props.data)
+  }
+
   render() {
     const carpool = this.props.data
     const arrival = moment(carpool.scheduled_arrival, "HH:mm:ss").format("hh:mm a")
@@ -41,7 +45,7 @@ class CarpoolResult extends React.Component {
             {carpool.route.distance} away
           </Text>
         </View>
-        <TouchableOpacity style={styles.messageContainer}>
+        <TouchableOpacity style={styles.messageContainer} onPress={() => this.handleJoin()}>
           <View style={styles.messageIcon}>
             <Icon name="envelope" size={16} color='#FFF' />
           </View>

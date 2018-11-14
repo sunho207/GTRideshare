@@ -8,6 +8,7 @@ import _ from 'lodash'
 import CarpoolResult from '../../components/join/CarpoolResult'
 import CarpoolMap from '../../components/scheduled/CarpoolMap'
 import styles from './styles/Results'
+import { joinCarpool } from '../../actions/join'
 
 class Results extends React.Component {
 
@@ -54,12 +55,12 @@ class Results extends React.Component {
       let filtered = []
       const filters = nextProps.filters
       _.forEach(nextProps.carpools, carpool => {
-        // if (carpool.scheduled_arrival >= filters.minArrival &&
-        //   carpool.scheduled_arrival <= filters.maxArrival &&
-        //   carpool.scheduled_departure >= filters.minDeparture &&
-        //   carpool.scheduled_departure <= filters.maxDeparture) {
+        if (carpool.scheduled_arrival >= filters.minArrival &&
+          carpool.scheduled_arrival <= filters.maxArrival &&
+          carpool.scheduled_departure >= filters.minDeparture &&
+          carpool.scheduled_departure <= filters.maxDeparture) {
           filtered.push(carpool)
-        // }
+        }
       })
       if (nextProps.sort == 'Distance') {
         filtered = _.orderBy(filtered, function (e) { return parseFloat(e.route.distance) }, ['asc'])
@@ -86,6 +87,11 @@ class Results extends React.Component {
     this.props.navigation.navigate('Create')
   }
 
+  handleJoin = (carpool) => {
+    this.props.joinCarpool(this.props.user.user_id, carpool.carpool_id, carpool.route.origin.lat, carpool.route.origin.lng)
+    this.props.navigation.navigate('Join')
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -110,7 +116,7 @@ class Results extends React.Component {
                 )
               } else {
                 return (
-                  <CarpoolResult data={item} handleSelect={this.handleSelect} />
+                  <CarpoolResult data={item} handleSelect={this.handleSelect} handleJoin={this.handleJoin} />
                 )
               }
               
@@ -125,13 +131,17 @@ class Results extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    user: state.login.user,
     carpools: state.join.carpools,
     sort: state.join.sort,
     filters: state.join.filters
   }
 }
 
-const mapDispatchToProps = {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    joinCarpool: (user_id, carpool_id, user_lat, user_lng) => dispatch(joinCarpool(user_id, carpool_id, user_lat, user_lng))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Results)

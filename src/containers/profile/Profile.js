@@ -61,7 +61,7 @@ class Profile extends React.Component {
               title='Edit Profile'
               onPress={this.handleEditProfile}
             />
-            <SettingsList.Item
+            {/* <SettingsList.Item
               hasNavArrow={false}
               hasSwitch={true}
               switchState={this.state.viewable}
@@ -80,7 +80,7 @@ class Profile extends React.Component {
               })}
               title='Notifications'
               titleStyle={styles.settingsItem}
-            />
+            /> */}
             <SettingsList.Item
               hasNavArrow={false}
               title='Logout'

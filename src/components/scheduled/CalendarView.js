@@ -50,16 +50,16 @@ class CalendarView extends React.Component {
           daysArray.push(4)
         } else if (carpool.days.charAt(i) == 'F') {
           daysArray.push(5)
-        } else if (carpool.days.charAt(i) == 'T') {
+        } else if (carpool.days.charAt(i) == 'A') {
           daysArray.push(6)
         }
       }
-      let carpoolStart = new Date(month.dateString)
-      let carpoolEnd = new Date(carpoolStart.getFullYear(), carpoolStart.getMonth() + 2, 0)
-      carpoolStart = carpoolStart >= new Date(carpool.start) ? carpoolStart : carpool.start
-      carpoolEnd = carpoolEnd <= new Date(carpool.end) ? carpoolEnd : carpool.end
+      // let carpoolStart = new Date(month.dateString)
+      // let carpoolEnd = new Date(carpoolStart.getFullYear(), carpoolStart.getMonth() + 2, 0)
+      // carpoolStart = carpoolStart >= new Date(carpool.start) ? carpoolStart : carpool.start
+      // carpoolEnd = carpoolEnd <= new Date(carpool.end) ? carpoolEnd : carpool.end
 
-      var datesArray = moment(carpoolStart).weekdaysInBetween(carpoolEnd, daysArray);
+      var datesArray = moment(carpool.start).weekdaysInBetween(carpool.end, daysArray);
       _.forEach(datesArray, date => {
         dates[date.format('YYYY-MM-DD')] = {
           marked: true

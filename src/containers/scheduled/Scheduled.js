@@ -32,7 +32,7 @@ class Scheduled extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getMyCarpools()
+    this.props.getMyCarpools(this.props.user.user_id)
   }
   
   handleSelect = (date) => {
@@ -63,6 +63,7 @@ class Scheduled extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    user: state.login.user,
     carpools: state.scheduled.carpools
   }
 }
@@ -70,7 +71,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     viewCarpool: (carpool) => dispatch(viewCarpool(carpool)),
-    getMyCarpools: () => dispatch(getMyCarpools())
+    getMyCarpools: (user_id) => dispatch(getMyCarpools(user_id))
   }
 }
 
