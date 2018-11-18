@@ -1,94 +1,138 @@
 import React from 'react';
-import { Text, View, Button } from 'react-native';
+import { Text, View, Button, List, FlatList, ListItem } from 'react-native';
 import { connect } from 'react-redux';
 import Chatkit from "@pusher/chatkit";
 import styles from './styles/Inbox';
-import { GiftedChat } from "react-native-gifted-chat";
+import { tokenUrl, instanceLocator } from './config';
+import RoomList from './RoomList';
+import { GiftedChat } from 'react-native-gifted-chat'
 
-
-
-
-const CHATKIT_TOKEN_PROVIDER_ENDPOINT = "https://us1.pusherplatform.io/services/chatkit_token_provider/v1/d3ac1342-3bc8-4b05-b682-4cacbfea946e/token";
-const CHATKIT_INSTANCE_LOCATOR = "v1:us1:d3ac1342-3bc8-4b05-b682-4cacbfea946e";
-const CHATKIT_ROOM_ID = 17318184;
-const CHATKIT_USER_NAME = "akhan95@gatech.edu";
+var ds;
 
 class Inbox extends React.Component {
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      messages: []
-    }
-  }
-
-componentDidMount() {
-    const tokenProvider = new Chatkit.TokenProvider({
-      url: CHATKIT_TOKEN_PROVIDER_ENDPOINT
-    });
-
-
-    const chatManager = new Chatkit.ChatManager({
-      instanceLocator: CHATKIT_INSTANCE_LOCATOR,
-      userId: CHATKIT_USER_NAME,
-      tokenProvider: tokenProvider
-    });
-
-    chatManager.connect().then(currentUser => {
-      this.currentUser = currentUser;
-      this.currentUser.subscribeToRoom({
-        roomId: CHATKIT_ROOM_ID,
-        hooks: {
-          onNewMessage: this.onReceive.bind(this)
-        }
-      });
-    });
-  }
-
-  onReceive(data) {
-    const { id, senderId, text, createdAt } = data;
-    const incomingMessage = {
-      _id: id,
-      text: text,
-      createdAt: new Date(createdAt),
-      user: {
-        _id: senderId,
-        name: senderId,
-        avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmXGGuS_PrRhQt73sGzdZvnkQrPXvtA-9cjcPxJLhLo8rW-sVA"
-      }
+      roomId: null,
+      messages: [],
+      joinableRooms: [],
+      joinedRooms: [],
+      //dataSource: ds,
     };
+    this.sendMessage = this.sendMessage.bind(this);
+    this.subscribeToRoom = this.subscribeToRoom.bind(this);
+    this.getRooms = this.getRooms.bind(this);
+    this.createRoom = this.createRoom.bind(this);
 
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, incomingMessage)
-    }));
+    //const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    
   }
 
-  onSend([message]) {
-      this.currentUser.sendMessage({
-        text: message.text,
-        roomId: CHATKIT_ROOM_ID
+  componentDidMount() {
+      
+      
+
+      const tokenProvider = new Chatkit.TokenProvider({
+        url: tokenUrl,
       });
+
+      const chatManager = new Chatkit.ChatManager({
+        instanceLocator: instanceLocator,
+        userId: 'akhan95@gatech.edu',
+        tokenProvider: tokenProvider,
+      });
+
+      chatManager
+        .connect()
+        .then(currentUser => {
+          this.currentUser = currentUser;
+          this.getRooms();
+        })
+        .catch(err => console.log('got an error connecting: ', err));
+
+        ds = null;
+
+
+    }
+
+  getRooms() {
+    this.currentUser
+      .getJoinableRooms()
+      .then(joinableRooms => {
+        this.setState({
+          joinableRooms,
+          joinedRooms: this.currentUser.rooms,
+        });
+      })
+      .catch(err => console.log('got an error with the rooms: ', err));
+  }
+
+  subscribeToRoom(roomId) {
+    this.setState({ messages: [] });
+    this.currentUser
+      .subscribeToRoom({
+        roomId: roomId,
+        hooks: {
+          onNewMessage: message => {
+            this.setState({
+              messages: [...this.state.messages, message],
+            });
+          },
+        },
+      })
+      .then(room => {
+        this.setState({
+          roomId: room.id,
+        });
+        this.getRooms();
+      })
+      .catch(err => console.log('got an error subscribing to the room: ', err));
+  }
+
+  sendMessage(text) {
+    this.currentUser.sendMessage({
+      text,
+      roomId: this.state.roomId,
+    });
+  }
+
+  createRoom(roomName) {
+    this.currentUser
+      .createRoom({
+        name: roomName,
+      })
+      .then(room => this.subscribeToRoom(room.id))
+      .catch(err => console.log('got an error creating the room: ', err));
+  }
+
+  renderRow(data) {
+    return (
+      <Text>{`\u2022 ${data}`}</Text>
+    );
   }
 
   render() {
     return (
-      <GiftedChat
-        messages={this.state.messages}
-        onSend={messages => this.onSend(messages)}
-        user={{
-          _id: CHATKIT_USER_NAME,
-        }}
-      />
-    )
+      <View style={styles.container}>
+        <ListView
+            dataSource={this.state.joinedRooms}
+            renderRow={this.renderRow}
+            />
+      </View>
+    );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
+  const mapStateToProps = (state) => {
+    return {
+    }
   }
-}
 
-const mapDispatchToProps = {
-}
+  const mapDispatchToProps = {
+  }
+
+
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Inbox)

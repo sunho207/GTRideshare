@@ -73,18 +73,7 @@ const Tabs = createBottomTabNavigator({
 
 const Stack = createStackNavigator({
   
-  Index: {
-    screen: Index
-  },
-  Login: {
-    screen: Login
-  },
-  Register: {
-    screen: Register
-  },
-  ForgotPW: {
-    screen: ForgotPW
-  },
+  
   Tabs: {
     screen: Tabs
   }
