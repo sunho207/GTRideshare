@@ -54,12 +54,23 @@ class Results extends React.Component {
     if (nextProps.carpools) {
       let filtered = []
       const filters = nextProps.filters
+      this.state.dates = filters.dates
       _.forEach(nextProps.carpools, carpool => {
+        let days = carpool.scheduled_days.toString()
         if (carpool.scheduled_arrival >= filters.minArrival &&
           carpool.scheduled_arrival <= filters.maxArrival &&
           carpool.scheduled_departure >= filters.minDeparture &&
           carpool.scheduled_departure <= filters.maxDeparture) {
-          filtered.push(carpool)
+            if (this.state.dates.sun && days.includes("0") || 
+                this.state.dates.mon && days.includes("1") ||
+                this.state.dates.tue && days.includes("2") ||
+                this.state.dates.wed && days.includes("3") || 
+                this.state.dates.thu && days.includes("4") ||
+                this.state.dates.fri && days.includes("5") ||
+                this.state.dates.sat && days.includes("6")) {
+              filtered.push(carpool)
+            }
+          
         }
       })
       if (nextProps.sort == 'Distance') {
@@ -88,7 +99,7 @@ class Results extends React.Component {
   }
 
   handleJoin = (carpool) => {
-    this.props.joinCarpool(this.props.user.user_id, carpool.carpool_id, carpool.route.origin.lat, carpool.route.origin.lng)
+    this.props.joinCarpool(this.props.user.user_id, carpool.carpool_id, carpool.route.origin.lat, carpool.route.origin.lng, this.props.address)
     this.props.navigation.navigate('Join')
   }
 
@@ -133,6 +144,7 @@ const mapStateToProps = (state) => {
   return {
     user: state.login.user,
     carpools: state.join.carpools,
+    address: state.join.address,
     sort: state.join.sort,
     filters: state.join.filters
   }
@@ -140,7 +152,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    joinCarpool: (user_id, carpool_id, user_lat, user_lng) => dispatch(joinCarpool(user_id, carpool_id, user_lat, user_lng))
+    joinCarpool: (user_id, carpool_id, user_lat, user_lng, user_address) => dispatch(joinCarpool(user_id, carpool_id, user_lat, user_lng, user_address))
   }
 }
 
