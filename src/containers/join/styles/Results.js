@@ -5,17 +5,9 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  map: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    height: '100%',
-    width: '100%'
-  },
   listContainer: {
-    top: Dimensions.get('window').height / 2.5,
-    height: Dimensions.get('window').height - Dimensions.get('window').height / 2.5,
     backgroundColor: '#fff',
+    height: '100%'
   },
   listContainerFiltering: {
     top: 0,
@@ -43,6 +35,16 @@ export default StyleSheet.create({
   cancelText: {
     color: '#fff',
     fontWeight: '500'
+  },
+  createText: {
+    color: '#42A5F5',
+    fontWeight: '500',
+    fontSize: 13,
+    textAlign: 'center',
+    margin: 5
+  },
+  createContainer:{
+    marginTop: 10
   },
   doneIcon: {
     position: 'absolute',

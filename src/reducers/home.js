@@ -1,12 +1,16 @@
 import _ from 'lodash'
 
 const initialState = {
-  //Add initial state
+  carpool: {}
 }
 
 const home = (state = initialState, action) => {
   switch (action.type) {
-    //Add cases based on action type
+    case 'RECEIVE_MY_CARPOOLS':
+      state.carpool = {}
+      return _.merge({}, state, {
+        carpool: action.carpools[0]
+      })
     default:
       return state
   }

@@ -1,17 +1,19 @@
 import React from 'react';
 import { Text, View, Button } from 'react-native';
 import { connect } from 'react-redux';
+import _ from 'lodash'
 import styles from './styles/Scheduled'
 import CalendarView from '../../components/scheduled/CalendarView'
 import ScheduledList from '../../components/scheduled/ScheduledList'
+import { viewCarpool, getMyCarpools } from '../../actions/scheduled'
 
 class Scheduled extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const title = 'My Carpools'
     const headerRight = (
       <Button
-        onPress={() => navigation.navigate('ViewAll')}
-        title="View All"
+        onPress={() => navigation.navigate('Pending')}
+        title="Pending"
         color="#007AFF"
       />
     )
@@ -25,20 +27,12 @@ class Scheduled extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      carpools: [
-        {
-          start: '2018-07-01',
-          end: '2018-11-01',
-          days: 'MWF'
-        },
-        {
-          start: '2018-09-01',
-          end: '2018-12-01',
-          days: 'T'
-        }
-      ],
       selected: ''
     }
+  }
+
+  componentWillMount() {
+    this.props.getMyCarpools(this.props.user.user_id)
   }
   
   handleSelect = (date) => {
@@ -47,23 +41,40 @@ class Scheduled extends React.Component {
     })
   }
 
+  handleView = (carpool) => {
+    this.props.viewCarpool(carpool)
+    this.props.navigation.navigate('CarpoolView')
+  }
+
   render() {
+    if (_.isEqual(this.props.carpools, [])) {
+      return (
+        <View styles={styles.container}>
+          <CalendarView />
+        </View>
+      )
+    }
     return (
       <View style={styles.container}>
-        <CalendarView carpools={this.state.carpools} handleSelect={this.handleSelect} />
-        <ScheduledList selected={this.state.selected} />
+        <CalendarView carpools={this.props.carpools} handleSelect={this.handleSelect} />
+        <ScheduledList carpools={this.props.carpools} selected={this.state.selected} handleView={this.handleView} />
       </View>
-    );
+    )
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    carpools: state.join.carpools
+    user: state.login.user,
+    carpools: state.scheduled.carpools
   }
 }
 
-const mapDispatchToProps = {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    viewCarpool: (carpool) => dispatch(viewCarpool(carpool)),
+    getMyCarpools: (user_id) => dispatch(getMyCarpools(user_id))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Scheduled)

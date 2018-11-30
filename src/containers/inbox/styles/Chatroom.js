@@ -1,14 +1,20 @@
 import { StyleSheet, Dimensions } from 'react-native'
 
 export default StyleSheet.create({
-  carpool: {
+  chatroom: {
     borderBottomWidth: 1,
     borderColor: '#ccc',
+    backgroundColor: '#fff',
     width: Dimensions.get('window').width,
     height: 75,
     flexDirection: 'row'
   },
-  mainProfile: {
+  row: {
+    flexWrap: 'wrap', 
+    alignItems: 'flex-start',
+    flexDirection:'row',
+  },
+  profile: {
     height: 50,
     width: 50,
     borderRadius: 25,
@@ -23,33 +29,12 @@ export default StyleSheet.create({
   name: {
     fontWeight: '700',
     color: '#777',
+    marginTop: 2,
     fontSize: 14
   },
-  distance: {
-    fontSize: 11,
+  message: {
+    marginTop: 2,
+    fontSize: 12,
     color: '#aaa'
-  },
-  schedule: {
-    fontWeight: '600',
-    fontSize: 11,
-    color: '#aaa'
-  },
-  messageContainer: {
-    flexDirection: 'column',
-    height: 74,
-    width: 60,
-    position: 'absolute',
-    right: 0,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  messageIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    borderColor: '#fff',
-    backgroundColor: '#4FC3F7',
-    alignItems: 'center',
-    justifyContent: 'center'
   }
 })

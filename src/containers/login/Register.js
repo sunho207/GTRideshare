@@ -15,6 +15,7 @@ class Register extends React.Component {
       password: '',
       firstName: '',
       lastName: '',
+      phoneNumber: '',
       confirm: '',
       verifiedEmail: false,
       verifiedPassword: false,
@@ -33,6 +34,17 @@ class Register extends React.Component {
     } else {
       this.setState({
         verifiedEmail: false
+      })
+    }
+  }
+
+  handlePhone = (e) => {
+    this.setState({
+      phoneNumber: e.toString()
+    })
+    if (e.length == 10) {
+      this.setState({
+        verifiedPhone: true
       })
     }
   }
@@ -75,7 +87,7 @@ class Register extends React.Component {
     } else if (!this.state.verifiedConfirm) {
       alert('Please make sure the passwords match')
     } else {
-      this.props.register(this.state.email, this.state.password, this.state.firstName, this.state.lastName)
+      this.props.register(this.state.email, this.state.password, this.state.firstName, this.state.lastName, this.state.phoneNumber)
     }
   }
 
@@ -140,6 +152,22 @@ class Register extends React.Component {
             size={20}
           />
         </View>
+        <Text style={styles.inputText}>Phone Number</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={e => this.handlePhone(e)}
+          value={this.state.phoneNumber}
+          spellCheck={false}
+          autoCapitalize="none"
+          underlineColorAndroid='transparent'
+        />
+        <View style={styles.verified}>
+          <Icon
+            name="check"
+            color={ this.state.verifiedPhone ? '#9CCC65' : '#bbb'}
+            size={20}
+          />
+        </View>
         <Text style={styles.inputText}>Password</Text>
         <TextInput
           style={styles.input}
@@ -189,7 +217,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    register: (email, password, firstName, lastName) => dispatch(register(email, password, firstName, lastName))
+    register: (email, password, firstName, lastName, phoneNumber) => dispatch(register(email, password, firstName, lastName, phoneNumber))
   }
 }
 

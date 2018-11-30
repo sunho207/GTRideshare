@@ -2,9 +2,9 @@ import React from 'react';
 import { Image } from 'react-native';
 import { MapView } from 'expo'
 import _ from 'lodash'
-import styles from './styles/MapRoutes'
+import styles from './styles/CarpoolMap'
 
-class MapRoutes extends React.Component {
+class CarpoolMap extends React.Component {
 
   constructor(props) {
     super(props);
@@ -41,7 +41,7 @@ class MapRoutes extends React.Component {
   fitMarkers = (markers) => {
     if (markers) {
       this.map.fitToCoordinates(markers, {
-        edgePadding: { top: 100, right: 100, bottom: 300, left: 100 }
+        edgePadding: { top: 40, right: 20, bottom: 40, left: 20 }
       })
     }
   }
@@ -92,4 +92,4 @@ class MapRoutes extends React.Component {
   }
 }
 
-export default MapRoutes
+export default CarpoolMap

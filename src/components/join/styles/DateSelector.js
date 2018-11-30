@@ -13,14 +13,20 @@ export default StyleSheet.create({
   },
   dayTextOff: {
     textAlign: 'center',
-    margin: 8,
-    fontWeight: '900',
-    color: '#ccc'
+    margin: 5,
+    marginTop: 12,
+    marginBottom: 12,
+    fontWeight: '400',
+    color: '#ccc',
+    fontSize: 11
   },
   dayTextOn: {
     textAlign: 'center',
-    margin: 8,
-    fontWeight: '900',
-    color: '#4FC3F7'
+    margin: 5,
+    marginTop: 12,
+    marginBottom: 12,
+    fontWeight: '600',
+    color: '#4FC3F7',
+    fontSize: 11
   }
 })

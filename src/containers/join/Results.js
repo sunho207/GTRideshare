@@ -6,8 +6,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import _ from 'lodash'
 
 import CarpoolResult from '../../components/join/CarpoolResult'
-import MapRoutes from '../../components/home/MapRoutes'
+import CarpoolMap from '../../components/scheduled/CarpoolMap'
 import styles from './styles/Results'
+import { joinCarpool } from '../../actions/join'
 
 class Results extends React.Component {
 
@@ -53,14 +54,24 @@ class Results extends React.Component {
     if (nextProps.carpools) {
       let filtered = []
       const filters = nextProps.filters
+      this.state.dates = filters.dates
       _.forEach(nextProps.carpools, carpool => {
-        // if (carpool.scheduled_arrival >= filters.minArrival &&
-        //   carpool.scheduled_arrival <= filters.maxArrival &&
-        //   carpool.scheduled_departure >= filters.minDeparture &&
-        //   carpool.scheduled_departure <= filters.maxDeparture) {
-        // carpool.scheduled_days
-          filtered.push(carpool)
-        // }
+        let days = carpool.scheduled_days.toString()
+        if (carpool.scheduled_arrival >= filters.minArrival &&
+          carpool.scheduled_arrival <= filters.maxArrival &&
+          carpool.scheduled_departure >= filters.minDeparture &&
+          carpool.scheduled_departure <= filters.maxDeparture) {
+            if (this.state.dates.sun && days.includes("0") || 
+                this.state.dates.mon && days.includes("1") ||
+                this.state.dates.tue && days.includes("2") ||
+                this.state.dates.wed && days.includes("3") || 
+                this.state.dates.thu && days.includes("4") ||
+                this.state.dates.fri && days.includes("5") ||
+                this.state.dates.sat && days.includes("6")) {
+              filtered.push(carpool)
+            }
+          
+        }
       })
       if (nextProps.sort == 'Distance') {
         filtered = _.orderBy(filtered, function (e) { return parseFloat(e.route.distance) }, ['asc'])
@@ -69,9 +80,10 @@ class Results extends React.Component {
       } else if (nextProps.sort == 'Departure Time') {
         filtered = _.orderBy(filtered, function (e) { return e.scheduled_departure }, ['asc'])
       }
+      filtered.push({})
       this.setState({
         filtered,
-        selected: filtered.length > 0 ? filtered[0] : null
+        selected: filtered.length > 1 ? filtered[0] : null
       })
     }
   }
@@ -82,15 +94,24 @@ class Results extends React.Component {
     })
   }
 
+  handleCreate = () => {
+    this.props.navigation.navigate('Create')
+  }
+
+  handleJoin = (carpool) => {
+    this.props.joinCarpool(this.props.user.user_id, carpool.carpool_id, carpool.route.origin.lat, carpool.route.origin.lng, this.props.address)
+    this.props.navigation.navigate('Join')
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <MapRoutes carpool={this.state.selected} />
+        <CarpoolMap carpool={this.state.selected} />
         <View style={styles.listContainer}>
           <View style={styles.listHeader}>
-            <TouchableOpacity style={styles.filterIcon} onPress={() => this.setState({filtering: !this.state.filtering})}>
+            <View style={styles.filterIcon}>
               <Icon name="sort" size={18} color='#FFF' />
-            </TouchableOpacity>
+            </View>
             <Text style={styles.listTitle}>
               Results
             </Text>
@@ -98,9 +119,18 @@ class Results extends React.Component {
           <FlatList
             data={this.state.filtered}
             renderItem={({item}) => {
-              return (
-                <CarpoolResult data={item} handleSelect={this.handleSelect} />
-              )
+              if (_.isEqual(item, {})) {
+                return (
+                  <TouchableOpacity style={styles.createContainer} onPress={this.handleCreate}>
+                    <Text style={styles.createText}>Didn't find what you were looking for?</Text>
+                  </TouchableOpacity>
+                )
+              } else {
+                return (
+                  <CarpoolResult data={item} handleSelect={this.handleSelect} handleJoin={this.handleJoin} />
+                )
+              }
+              
             }}
             keyExtractor={(item, index) => index.toString()}
           />
@@ -112,13 +142,18 @@ class Results extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    user: state.login.user,
     carpools: state.join.carpools,
+    address: state.join.address,
     sort: state.join.sort,
     filters: state.join.filters
   }
 }
 
-const mapDispatchToProps = {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    joinCarpool: (user_id, carpool_id, user_lat, user_lng, user_address) => dispatch(joinCarpool(user_id, carpool_id, user_lat, user_lng, user_address))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Results)

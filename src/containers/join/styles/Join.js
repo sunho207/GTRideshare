@@ -14,6 +14,18 @@ export default StyleSheet.create({
     height: '100%',
     width: '100%'
   },
+  bgImage: {
+    height: Dimensions.get('window').height * 0.3,
+    width: Dimensions.get('window').width,
+    marginLeft: -Dimensions.get('window').width * 0.1
+  },
+  description: {
+    color: '#777',
+    fontSize: 16,
+    marginTop: 40,
+    marginBottom: 40,
+    textAlign: 'center'
+  },
   buttonContainer: {
     bottom: 15,
     position: 'absolute',
@@ -62,6 +74,17 @@ export default StyleSheet.create({
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
+    padding: 8,
+    fontSize: 12,
+    color: '#777',
+    textAlign: 'center'
+  },
+  semesterInput: {
+    width: 115,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    margin: 10,
     padding: 8,
     fontSize: 12,
     color: '#777',

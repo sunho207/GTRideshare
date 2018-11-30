@@ -2,9 +2,9 @@ import React from 'react';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment'
-import styles from './styles/CarpoolResult'
+import styles from './styles/CarpoolItem'
 
-class CarpoolResult extends React.Component {
+class CarpoolItem extends React.Component {
 
   constructor(props) {
     super(props);
@@ -13,12 +13,8 @@ class CarpoolResult extends React.Component {
     }
   }
 
-  handleSelect = () => {
-    this.props.handleSelect(this.props.data)
-  }
-
-  handleJoin = () => {
-    this.props.handleJoin(this.props.data)
+  handleView = () => {
+    this.props.handleView(this.props.carpool)
   }
 
   convertDates = (number) => {
@@ -49,7 +45,7 @@ class CarpoolResult extends React.Component {
   }
 
   render() {
-    const carpool = this.props.data
+    const carpool = this.props.carpool
     const arrival = moment(carpool.scheduled_arrival, "HH:mm:ss").format("hh:mm a")
     const departure = moment(carpool.scheduled_departure, "HH:mm:ss").format("hh:mm a")
     const days = this.convertDates(carpool.scheduled_days)
@@ -57,29 +53,26 @@ class CarpoolResult extends React.Component {
       return <View></View>
     }
     return (
-      <TouchableOpacity style={styles.carpool} onPress={() => this.handleSelect()}>
+      <TouchableOpacity style={styles.carpool} onPress={() => this.handleView()}>
         <Image
           style={styles.mainProfile}
           source={{uri: carpool.captain.profile_picture}}
         />
         <View style={styles.infoContainer}>
-          <Text style={styles.name}>
-            {carpool.captain.first_name} {carpool.captain.last_name}
-          </Text>
+          <View style={styles.row}>
+            <Text style={styles.name}>
+              {carpool.captain.first_name} {carpool.captain.last_name}
+            </Text>
+          </View>
           <Text style={styles.schedule}>
             {days} {arrival} to {departure}
           </Text>
           <Text style={styles.distance}>
-            {carpool.route.distance} away
+            
           </Text>
         </View>
-        <TouchableOpacity style={styles.messageContainer} onPress={() => this.handleJoin()}>
-          <View style={styles.messageIcon}>
-            <Icon name="envelope" size={16} color='#FFF' />
-          </View>
-        </TouchableOpacity>
       </TouchableOpacity>
     )
   }
 }
-export default CarpoolResult
+export default CarpoolItem

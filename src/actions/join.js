@@ -1,11 +1,14 @@
-export function receiveCarpools(carpools) {
+import { getMyCarpools } from './scheduled'
+
+export function receiveCarpools(carpools, address) {
   return {
     type: 'RECEIVE_CARPOOLS',
-    carpools
+    carpools,
+    address
   }
 }
 
-export function searchCarpools(lat, lng) {
+export function searchCarpools(lat, lng, address) {
   return async dispatch => {
     fetch(`http://localhost:8080/carpool?lat=${lat}&lng=${lng}`, {
       method: 'GET',
@@ -15,7 +18,7 @@ export function searchCarpools(lat, lng) {
     })
     .then(res => res.json())
     .then(json => {
-      dispatch(receiveCarpools(json))
+      dispatch(receiveCarpools(json, address))
     })
     .catch(err => {
       console.log(err)
@@ -37,15 +40,7 @@ export function filterCarpools(sort, filters) {
   }
 }
 
-export function createCarpool(user_id, lat, lng, arrival, departure, days) {
-  const test = JSON.stringify({
-    user_id,
-    lat,
-    lng,
-    arrival,
-    departure,
-    days
-  })
+export function createCarpool(user_id, lat, lng, arrival, departure, days, start, end, seats, address) {
   return async dispatch => {
     fetch(`http://localhost:8080/carpool`, {
       method: 'POST',
@@ -59,12 +54,41 @@ export function createCarpool(user_id, lat, lng, arrival, departure, days) {
         lng,
         arrival,
         departure,
-        days
+        days,
+        start,
+        end,
+        seats,
+        address
       })
     })
     .then(res => res.json())
     .then(json => {
-      console.log(json)
+      dispatch(getMyCarpools(user_id))
+    })
+    .catch(err => {
+
+    })
+  }
+}
+
+export function joinCarpool(user_id, carpool_id, user_lat, user_lng, user_address) {
+  return async dispatch => {
+    fetch(`http://localhost:8080/carpooler`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user_id,
+        carpool_id,
+        user_lat,
+        user_lng,
+        user_address
+      })
+    })
+    .then(res => {
+      dispatch(getMyCarpools(user_id))
     })
     .catch(err => {
 

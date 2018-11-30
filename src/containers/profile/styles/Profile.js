@@ -17,9 +17,17 @@ export default StyleSheet.create({
   profileInfo: {
     marginRight: 'auto',
     marginLeft: 'auto',
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: '600',
     color: '#777',
+    marginBottom: 5
+  },
+  emailInfo: {
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    fontSize: 12,
+    fontWeight: '500',
+    color: '#aaa',
     marginBottom: 40
   },
   settingsContainer: {
