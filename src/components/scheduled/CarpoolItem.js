@@ -17,10 +17,38 @@ class CarpoolItem extends React.Component {
     this.props.handleView(this.props.carpool)
   }
 
+  convertDates = (number) => {
+    let days = ""
+    numberDays = number.toString()
+    if (numberDays.includes("0")) {
+      days += "Sun, "
+    }
+    if (numberDays.includes("1")) {
+      days += "Mon, "
+    } 
+    if (numberDays.includes("2")) {
+      days += "Tue, "
+    }
+    if (numberDays.includes("3")) {
+      days += "Wed, "
+    }
+    if (numberDays.includes("4")) {
+      days += "Thu, "
+    }
+    if (numberDays.includes("5")) {
+      days += "Fri, "
+    }
+    if (numberDays.includes("6")) {
+      days += "Sat, "
+    }
+    return days.substring(0, days.length - 2)
+  }
+
   render() {
     const carpool = this.props.carpool
     const arrival = moment(carpool.scheduled_arrival, "HH:mm:ss").format("hh:mm a")
     const departure = moment(carpool.scheduled_departure, "HH:mm:ss").format("hh:mm a")
+    const days = this.convertDates(carpool.scheduled_days)
     if (!carpool) {
       return <View></View>
     }
@@ -37,7 +65,7 @@ class CarpoolItem extends React.Component {
             </Text>
           </View>
           <Text style={styles.schedule}>
-            {carpool.days} {arrival} to {departure}
+            {days} {arrival} to {departure}
           </Text>
           <Text style={styles.distance}>
             

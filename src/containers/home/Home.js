@@ -41,7 +41,9 @@ class Home extends React.Component {
   render() {
     if (_.isEqual(this.props.carpool, {})) {
       return (
-        <View></View>
+        <View style={styles.container}>
+          <MapRoutes />
+        </View>
       )
     }
     return (

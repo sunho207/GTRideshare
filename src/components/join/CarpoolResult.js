@@ -21,10 +21,38 @@ class CarpoolResult extends React.Component {
     this.props.handleJoin(this.props.data)
   }
 
+  convertDates = (number) => {
+    let days = ""
+    numberDays = number.toString()
+    if (numberDays.includes("0")) {
+      days += "Sun, "
+    }
+    if (numberDays.includes("1")) {
+      days += "Mon, "
+    } 
+    if (numberDays.includes("2")) {
+      days += "Tue, "
+    }
+    if (numberDays.includes("3")) {
+      days += "Wed, "
+    }
+    if (numberDays.includes("4")) {
+      days += "Thu, "
+    }
+    if (numberDays.includes("5")) {
+      days += "Fri, "
+    }
+    if (numberDays.includes("6")) {
+      days += "Sat, "
+    }
+    return days.substring(0, days.length - 2)
+  }
+
   render() {
     const carpool = this.props.data
     const arrival = moment(carpool.scheduled_arrival, "HH:mm:ss").format("hh:mm a")
     const departure = moment(carpool.scheduled_departure, "HH:mm:ss").format("hh:mm a")
+    const days = this.convertDates(carpool.scheduled_days)
     if (!carpool) {
       return <View></View>
     }
@@ -32,14 +60,14 @@ class CarpoolResult extends React.Component {
       <TouchableOpacity style={styles.carpool} onPress={() => this.handleSelect()}>
         <Image
           style={styles.mainProfile}
-          source={{uri: carpool.user_picture}}
+          source={{uri: carpool.captain.profile_picture}}
         />
         <View style={styles.infoContainer}>
           <Text style={styles.name}>
-            {carpool.user_firstname} {carpool.user_lastname}
+            {carpool.captain.first_name} {carpool.captain.last_name}
           </Text>
           <Text style={styles.schedule}>
-            {carpool.scheduled_days} {arrival} to {departure}
+            {days} {arrival} to {departure}
           </Text>
           <Text style={styles.distance}>
             {carpool.route.distance} away

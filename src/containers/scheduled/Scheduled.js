@@ -49,7 +49,9 @@ class Scheduled extends React.Component {
   render() {
     if (_.isEqual(this.props.carpools, [])) {
       return (
-        <View></View>
+        <View styles={styles.container}>
+          <CalendarView />
+        </View>
       )
     }
     return (

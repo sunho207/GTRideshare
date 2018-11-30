@@ -4,6 +4,7 @@ import openMap from 'react-native-open-maps';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import _ from 'lodash'
 import call from 'react-native-phone-call'
+import moment from 'moment'
 import styles from './styles/Carpool'
 import Carpooler from './Carpooler'
 
@@ -56,10 +57,40 @@ class Carpool extends React.Component {
     })
   }
 
+  convertDates = (number) => {
+    let days = ""
+    numberDays = number.toString()
+    if (numberDays.includes("0")) {
+      days += "Sun, "
+    }
+    if (numberDays.includes("1")) {
+      days += "Mon, "
+    } 
+    if (numberDays.includes("2")) {
+      days += "Tue, "
+    }
+    if (numberDays.includes("3")) {
+      days += "Wed, "
+    }
+    if (numberDays.includes("4")) {
+      days += "Thu, "
+    }
+    if (numberDays.includes("5")) {
+      days += "Fri, "
+    }
+    if (numberDays.includes("6")) {
+      days += "Sat, "
+    }
+    return days.substring(0, days.length - 2)
+  }
+
   render() {
     const carpool = this.props.carpool
     const carpoolers = this.props.carpool && this.props.carpool.carpoolers
     const route = this.props.carpool && this.props.carpool.route
+    const arrival = moment(carpool.scheduled_arrival, "HH:mm:ss").format("hh:mm a")
+    const departure = moment(carpool.scheduled_departure, "HH:mm:ss").format("hh:mm a")
+    const days = this.convertDates(carpool.scheduled_days)
     return (
       <View style={styles.slider}>
         <View style={styles.up}>
@@ -127,17 +158,17 @@ class Carpool extends React.Component {
         <View style={styles.row}>
           <View style={styles.carpoolMoreInfo}>
             <Text style={styles.profileText}>Arrival at Tech</Text>
-            <Text style={styles.profileSubtext2}>{carpool.scheduled_arrival}</Text>
+            <Text style={styles.profileSubtext2}>{arrival}</Text>
           </View>
           <View style={styles.carpoolMoreInfo}>
             <Text style={styles.profileText}>Departure from Tech</Text>
-            <Text style={styles.profileSubtext2}>{carpool.scheduled_departure}</Text>
+            <Text style={styles.profileSubtext2}>{departure}</Text>
           </View>
         </View>
         <View style={styles.row}>
           <View style={styles.carpoolMoreInfo}>
             <Text style={styles.profileText}>Carpool Schedule</Text>
-            <Text style={styles.profileSubtext2}>{carpool && carpool.days}</Text>
+            <Text style={styles.profileSubtext2}>{carpool && days}</Text>
           </View>
           <View style={styles.carpoolMoreInfo}>
             <Text style={styles.profileText}>Seats Filled</Text>
@@ -175,9 +206,6 @@ class Carpool extends React.Component {
             {
               this.state.selected &&
               this.state.selected.first_name + " " + this.state.selected.last_name
-            }
-            {
-              _.isEqual(this.state.selected, carpool.captain) && " (Captain)"
             }
           </Text>
           <Text style={styles.carpoolerSubtext}>

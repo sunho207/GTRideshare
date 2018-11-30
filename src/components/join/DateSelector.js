@@ -26,25 +26,25 @@ class DateSelector extends React.Component {
     return (
       <View style={styles.days}>
         <TouchableOpacity style={styles.day} onPress={() => this.handleDateToggle('sun')}>
-          <Text style={dates.sun ? styles.dayTextOn : styles.dayTextOff}>S</Text>
+          <Text style={dates.sun ? styles.dayTextOn : styles.dayTextOff}>Sun</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.day} onPress={() => this.handleDateToggle('mon')}>
-          <Text style={dates.mon ? styles.dayTextOn : styles.dayTextOff}>M</Text>
+          <Text style={dates.mon ? styles.dayTextOn : styles.dayTextOff}>Mon</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.day} onPress={() => this.handleDateToggle('tue')}>
-          <Text style={dates.tue ? styles.dayTextOn : styles.dayTextOff}>T</Text>
+          <Text style={dates.tue ? styles.dayTextOn : styles.dayTextOff}>Tue</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.day} onPress={() => this.handleDateToggle('wed')}>
-          <Text style={dates.wed ? styles.dayTextOn : styles.dayTextOff}>W</Text>
+          <Text style={dates.wed ? styles.dayTextOn : styles.dayTextOff}>Wed</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.day} onPress={() => this.handleDateToggle('thu')}>
-          <Text style={dates.thu ? styles.dayTextOn : styles.dayTextOff}>Th</Text>
+          <Text style={dates.thu ? styles.dayTextOn : styles.dayTextOff}>Thu</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.day} onPress={() => this.handleDateToggle('fri')}>
-          <Text style={dates.fri ? styles.dayTextOn : styles.dayTextOff}>F</Text>
+          <Text style={dates.fri ? styles.dayTextOn : styles.dayTextOff}>Fri</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.day} onPress={() => this.handleDateToggle('sat')}>
-          <Text style={dates.sat ? styles.dayTextOn : styles.dayTextOff}>S</Text>
+          <Text style={dates.sat ? styles.dayTextOn : styles.dayTextOff}>Sat</Text>
         </TouchableOpacity>
       </View>
     )

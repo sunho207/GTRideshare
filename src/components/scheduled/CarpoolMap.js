@@ -56,8 +56,10 @@ class CarpoolMap extends React.Component {
   initializeMap = (selected) => {
     if (selected) {
       let markers = []
-      markers.push(this.createMarker(selected.route.origin.lat, selected.route.origin.lng))
       markers.push(this.createMarker(selected.route.destination.lat, selected.route.destination.lng))
+      _.forEach(selected.carpoolers, c => {
+        markers.push(this.createMarker(c.carpooler_lat, c.carpooler_lng))
+      })
       this.setState({
         coordinates: this.decode(selected.route.directions),
         markers

@@ -18,15 +18,9 @@ class ScheduledList extends React.Component {
     _.forEach(this.props.carpools, carpool => {
       if (Date.parse(carpool.start) <= Date.parse(nextProps.selected) && 
         Date.parse(carpool.end) >= Date.parse(nextProps.selected)) {
-          let parsedDate = new Date(nextProps.selected).getDay()
-          if (parsedDate == 0 && carpool.days.includes('M') ||
-            parsedDate == 1 && carpool.days.includes('T') ||
-            parsedDate == 2 && carpool.days.includes('W') ||
-            parsedDate == 3 && carpool.days.includes('H') ||
-            parsedDate == 4 && carpool.days.includes('F') ||
-            parsedDate == 5 && carpool.days.includes('T') ||
-            parsedDate == 6 && carpool.days.includes('S')
-          ) {
+          let parsedDate = new Date(nextProps.selected).getDay() == 7 ? 0 : new Date(nextProps.selected).getDay() + 1
+          let parsed = carpool.scheduled_days.toString()
+          if (parsed.includes(parsedDate)) {
             filteredArray.push(carpool)
           }
       }

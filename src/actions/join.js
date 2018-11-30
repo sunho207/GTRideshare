@@ -39,7 +39,7 @@ export function filterCarpools(sort, filters) {
   }
 }
 
-export function createCarpool(user_id, lat, lng, arrival, departure, days) {
+export function createCarpool(user_id, lat, lng, arrival, departure, days, start, end, seats, address) {
   return async dispatch => {
     fetch(`http://localhost:8080/carpool`, {
       method: 'POST',
@@ -53,7 +53,11 @@ export function createCarpool(user_id, lat, lng, arrival, departure, days) {
         lng,
         arrival,
         departure,
-        days
+        days,
+        start,
+        end,
+        seats,
+        address
       })
     })
     .then(res => res.json())
@@ -66,7 +70,7 @@ export function createCarpool(user_id, lat, lng, arrival, departure, days) {
   }
 }
 
-export function joinCarpool(user_id, carpool_id, user_lat, user_lng) {
+export function joinCarpool(user_id, carpool_id, user_lat, user_lng, user_address) {
   return async dispatch => {
     fetch(`http://localhost:8080/carpooler`, {
       method: 'POST',
@@ -78,7 +82,8 @@ export function joinCarpool(user_id, carpool_id, user_lat, user_lng) {
         user_id,
         carpool_id,
         user_lat,
-        user_lng
+        user_lng,
+        user_address
       })
     })
     .then(res => {
