@@ -17,11 +17,6 @@ const scheduled = (state = initialState, action) => {
       return _.merge({}, state, {
         carpools: action.carpools
       })
-    case 'RECEIVE_PENDING':
-      state.pending = []
-      return _.merge({}, state, {
-        pending: action.pending
-      })
     default:
       return state
   }

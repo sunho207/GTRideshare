@@ -13,7 +13,6 @@ import Register from './src/containers/login/Register'
 import ForgotPW from './src/containers/login/ForgotPW'
 import Home from './src/containers/home/Home'
 import Scheduled from './src/containers/scheduled/Scheduled'
-import Pending from './src/containers/scheduled/Pending'
 import CarpoolView from './src/containers/scheduled/CarpoolView'
 import Join from './src/containers/join/Join'
 import Create from './src/containers/join/Create'
@@ -33,9 +32,6 @@ const ScheduledStack = createStackNavigator({
   },
   CarpoolView: {
     screen: CarpoolView
-  },
-  Pending: {
-    screen: Pending
   }
 }, {
   mode: 'modal'

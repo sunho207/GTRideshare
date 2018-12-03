@@ -43,26 +43,7 @@ export default StyleSheet.create({
     fontSize: 11,
     color: '#aaa'
   },
-  acceptContainer: {
-    flexDirection: 'column',
-    height: 74,
-    width: 60,
-    position: 'absolute',
-    right: 50,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  acceptIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    borderColor: '#fff',
-    opacity: 0.8,
-    backgroundColor: '#43A047',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  rejectContainer: {
+  messageContainer: {
     flexDirection: 'column',
     height: 74,
     width: 60,
@@ -71,13 +52,12 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  rejectIcon: {
+  messageIcon: {
     width: 40,
     height: 40,
     borderRadius: 20,
     borderColor: '#fff',
-    opacity: 0.8,
-    backgroundColor: '#e53935',
+    backgroundColor: '#4FC3F7',
     alignItems: 'center',
     justifyContent: 'center'
   }

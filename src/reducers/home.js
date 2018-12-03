@@ -7,7 +7,6 @@ const initialState = {
 const home = (state = initialState, action) => {
   switch (action.type) {
     case 'RECEIVE_MY_CARPOOLS':
-      state.carpool = {}
       return _.merge({}, state, {
         carpool: action.carpools[0]
       })

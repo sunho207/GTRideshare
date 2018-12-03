@@ -20,8 +20,8 @@ class Create extends React.Component {
     this.inputRefs = {};
     this.state = {
       stage: 1,
-      arrival: '10:00 am',
-      departure: '2:00 pm',
+      arrival: '12:00 pm',
+      departure: '12:00 pm',
       start: '',
       end: '',
       seats: '',

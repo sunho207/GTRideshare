@@ -7,10 +7,8 @@ const initialState = {
 const join = (state = initialState, action) => {
   switch (action.type) {
     case 'RECEIVE_CARPOOLS':
-      state.carpools = []
       return _.merge({}, state, {
-        carpools: action.carpools,
-        address: action.address
+        carpools: action.carpools
       })
     case 'RECEIVE_FILTERS':
       return _.merge({}, state, {

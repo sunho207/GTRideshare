@@ -10,17 +10,17 @@ import { viewCarpool, getMyCarpools } from '../../actions/scheduled'
 class Scheduled extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const title = 'My Carpools'
-    const headerRight = (
-      <Button
-        onPress={() => navigation.navigate('Pending')}
-        title="Pending"
-        color="#007AFF"
-      />
-    )
+    // const headerRight = (
+    //   <Button
+    //     onPress={() => navigation.navigate('ViewAll')}
+    //     title="Pending"
+    //     color="#007AFF"
+    //   />
+    // )
   
     return {
       title,
-      headerRight
+      // headerRight
     };
   };
 
