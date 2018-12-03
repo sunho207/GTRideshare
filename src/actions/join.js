@@ -1,13 +1,14 @@
 import { getMyCarpools } from './scheduled'
 
-export function receiveCarpools(carpools) {
+export function receiveCarpools(carpools, address) {
   return {
     type: 'RECEIVE_CARPOOLS',
-    carpools
+    carpools,
+    address
   }
 }
 
-export function searchCarpools(lat, lng) {
+export function searchCarpools(lat, lng, address) {
   return async dispatch => {
     fetch(`http://localhost:8080/carpool?lat=${lat}&lng=${lng}`, {
       method: 'GET',
@@ -17,7 +18,7 @@ export function searchCarpools(lat, lng) {
     })
     .then(res => res.json())
     .then(json => {
-      dispatch(receiveCarpools(json))
+      dispatch(receiveCarpools(json, address))
     })
     .catch(err => {
       console.log(err)

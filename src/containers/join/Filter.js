@@ -39,6 +39,10 @@ class Filter extends React.Component {
       },
       items: [
         {
+          label: 'Distance',
+          value: 'Distance',
+        },
+        {
             label: 'Arrival Time',
             value: 'Arrival Time',
         },
@@ -53,6 +57,7 @@ class Filter extends React.Component {
   componentWillMount() {
     if (this.props.filters) {
       this.setState({
+        selected: this.props.sort,
         dates: this.props.filters.dates,
         minArrival: moment(this.props.filters.minArrival, "HH:mm").format("hh:mm a"),
         maxArrival: moment(this.props.filters.maxArrival, "HH:mm").format("hh:mm a"),
@@ -111,10 +116,6 @@ class Filter extends React.Component {
           <View style={styles.filterContainer}>
             <Text style={styles.sortTitle}>Sort By</Text>
             <RNPickerSelect
-              placeholder={{
-                label: 'Distance',
-                value: 0,
-              }}
               items={this.state.items}
               onValueChange={(value) => {
                 this.setState({
